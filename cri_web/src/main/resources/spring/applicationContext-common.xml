@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <!-- spring从properties里面读取jdbc配置文件 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:/application-*.properties"/>
+
+    <bean class="com.critc.core.spring.SpringContextHolder" lazy-init="false"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.critc"></context:component-scan>
+
+    <!--添加声明，为Spring容器中那些匹配@AspectJ切面的Bean创建代理，其中的proxy-target-class="true"
+        表示使用CGLib动态代理技术织入增强 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--dao和service异常切面 -->
+    <bean id="daoExceptionAspect" class="com.critc.core.aop.DaoExceptionAspect"/>
+    <bean id="serviceExceptionAspect" class="com.critc.core.aop.ServiceExceptionAspect"/>
+
+    <!-- 系统性能监控切面-->
+    <bean id="performanceAspect" class="com.critc.core.aop.PerformanceAspect"/>
+
+    <!--设置公共参数 -->
+    <bean id="pubConfig" class="com.critc.core.pub.PubConfig">
+        <property name="imageServer" value="${imageServer}"/>
+        <property name="imageUploadPath" value="${imageUploadPath}"/>
+        <property name="staticServer" value="${staticServer}"/>
+        <property name="dynamicServer" value="${dynamicServer}"/>
+        <property name="fileUploadPath" value="${fileUploadPath}"/>
+    </bean>
+</beans>

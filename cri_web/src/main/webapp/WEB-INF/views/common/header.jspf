@@ -1,0 +1,97 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="${dynamicServer}/index.htm">
+                <img style="margin-top:10px;" src="${staticServer}/assets/logo/logo1.jpg" alt="logo"
+                     height="30px" class="logo-default" /></a>
+            <div class="menu-toggler sidebar-toggler">
+                <span></span>
+            </div>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+           data-target=".navbar-collapse">
+            <span></span>
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <div class="page-logo" style="margin-top:-5px;">
+            <%--<a href="${dynamicServer}/index.htm">
+                <img src="${staticServer}/assets/train/logo.jpg" alt="logo"
+                     height="30px" class="logo-default" /></a>--%>
+        </div>
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                <li class="dropdown dropdown-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                       data-close-others="true">
+                        <img alt="" class="img-circle" src="${imageServer}${sessionScope.userSession.avatar}"
+                             onerror="this.onerror=null;this.src='${imageServer}/sys/user/avatar/male.jpg'" />
+                        <span class="username username-hide-on-mobile"> ${sessionScope.userSession.realname} </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>
+                            <a href="${dynamicServer}/sys/user/view.htm">
+                                <i class="icon-user"></i> 个人信息 </a>
+                        </li>
+                        <li>
+                            <a href="${dynamicServer}/sys/user/toUpdatePass.htm">
+                                <i class="icon-calendar"></i> 修改密码 </a>
+                        </li>
+
+                        <c:if test="${sessionScope.userSession.roleName eq '系统管理员' }">
+                            <li class="divider"></li>
+                            <li id="switchBtn" class="">
+                                <a onclick="switchBtn();">
+                                    <i class="icon-settings"></i>
+                                    <span class="btnp" style="margin-left: 4px">平台管理</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.userSession.roleName eq '系统管理员' }">
+
+                            <li id="switchBtn" class="">
+                                <a onclick="switchBtn2();">
+                                    <i class="fa fa-institution"></i>
+                                    <span class="btnp" style="margin-left: 4px">应用系统</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="${dynamicServer}/logout.htm">
+                                <i class="icon-key"></i> 注销 </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <!-- END USER LOGIN DROPDOWN -->
+                <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                <!-- END QUICK SIDEBAR TOGGLER -->
+            </ul>
+        </div>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+<script type="text/javascript">
+    //切换菜单
+    function switchBtn() {
+        window.location.href = "${dynamicServer}/sys/index.htm";
+
+    }
+    function switchBtn2() {
+        window.location.href = "${dynamicServer}/index.htm";
+
+    }
+</script>
+<!-- END HEADER -->

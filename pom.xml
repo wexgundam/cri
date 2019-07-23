@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.critc</groupId>
+    <artifactId>cri</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>cri_core</module>
+        <module>cri_web</module>
+    </modules>
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <com.cdpf.version>1.0-SNAPSHOT</com.cdpf.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from CDPF_v1 -->
+                <groupId>com.critc</groupId>
+                <artifactId>cdpf</artifactId>
+                <version>${com.cdpf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.critc</groupId>
+                <artifactId>cdpf_core</artifactId>
+                <version>${com.cdpf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.critc</groupId>
+                <artifactId>cdpf_core_web</artifactId>
+                <type>war</type>
+                <version>${com.cdpf.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>com.critc.cdpf</id>
+            <name>com.critc.cdpf</name>
+            <url>http://localhost:8081/nexus/content/groups/com.critc/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <finalName>cri</finalName>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>com.critc.cri.snapshots</id>
+            <name>com.critc.cri.snapshots</name>
+            <url>http://localhost:8081/nexus/content/repositories/com.critc.cri.snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
