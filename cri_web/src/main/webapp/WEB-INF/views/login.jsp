@@ -258,7 +258,7 @@
                 <div class="col-md-6 login-container bs-reset">
                     <div  class="login-logo login-6 row">
                     <div class="col-md-4">
-                        <img src="${staticServer}/assets/train/logo.jpg" alt="logo"
+                        <img src="${staticServer}/assets/logo/logo.jpg" alt="logo"
                                               height="50px" class="logo-default" />
                     </div>
                         <div class="col-md-5 col-md-offset-3" style="color: #ff0000;"><h3> 信息技术中心</h3></div>
