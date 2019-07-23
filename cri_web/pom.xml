@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cri</artifactId>
+        <groupId>com.critc</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cri_web</artifactId>
+    <packaging>war</packaging>
+
+    <name>cri_web</name>
+    <url>https://github.com/wexgundam/cri</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.critc</groupId>
+            <artifactId>cdpf_core_web</artifactId>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.critc</groupId>
+            <artifactId>cri_core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>cri_web</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <overlays>
+                        <overlay>
+                            <groupId>com.critc</groupId>
+                            <artifactId>cdpf_core_web</artifactId>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
