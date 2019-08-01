@@ -34,7 +34,7 @@
                        data-close-others="true">
                         <img alt="" class="img-circle" src="${imageServer}${sessionScope.userSession.avatar}"
                              onerror="this.onerror=null;this.src='${imageServer}/sys/user/avatar/male.jpg'" />
-                        <span class="username username-hide-on-mobile"> ${sessionScope.userSession.realname} </span>
+                        <span class="username username-hide-on-mobile"> ${sessionScope.userSession.realName} </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">

@@ -74,7 +74,7 @@
     <!-- 设置Web应用的名称-->
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>ptpa.root</param-value>
+        <param-value>cir.root</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
