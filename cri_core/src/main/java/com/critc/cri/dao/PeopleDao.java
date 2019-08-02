@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 系统用户Dao
  *
- * @author 孔垂云
+ * @author 靳磊
  * @date 2017-06-13
  */
 @Repository
