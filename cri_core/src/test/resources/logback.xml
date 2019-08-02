@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="logBase" value="d:\\logs\\cri\\"/>
+    <property name="logBase" value="d:\\logs\\ptpa\\"/>
     <!-- appender -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
