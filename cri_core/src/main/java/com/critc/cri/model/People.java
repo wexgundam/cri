@@ -6,8 +6,6 @@
 package com.critc.cri.model;
 
 
-import com.critc.util.model.BaseModel;
-
 /**
  * what:    (这里用一句话描述这个类的作用). <br/>
  * when:    (这里描述这个类的适用时机 – 可选).<br/>
