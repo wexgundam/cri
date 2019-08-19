@@ -2,6 +2,7 @@ package com.critc.cri.service;
 
 import com.critc.cri.dao.PeopleDao;
 import com.critc.cri.model.People;
+import com.critc.util.page.PageSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @date 2017-06-13
  */
 @Service
-public class PeopleService {
+public class PeopleService extends PageSearchVO{
     @Autowired
     private PeopleDao peopleDao;
 
