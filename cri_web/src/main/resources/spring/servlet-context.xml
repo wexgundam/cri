@@ -13,6 +13,11 @@
     <!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
     <mvc:annotation-driven/>
 
+    <!-- 支持跨域访问 -->
+    <mvc:cors>
+        <mvc:mapping path="/**"/>
+    </mvc:cors>
+
     <!-- 设置Controller注解，及json格式解析器-->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">

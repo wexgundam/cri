@@ -5,7 +5,6 @@
  */
 package com.critc.cri.model;
 
-import com.critc.util.model.BaseModel;
 
 /**
  * what:    (这里用一句话描述这个类的作用). <br/>
