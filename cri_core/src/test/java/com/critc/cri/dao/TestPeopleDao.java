@@ -25,8 +25,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/spring/applicationContext-database.xml")
 public class TestPeopleDao {
-    @Autowired
-    private PeopleDao peopleDao;
+    @Autowired private PeopleDao peopleDao;
+
 
     @Test
     public void contextLoads() {
