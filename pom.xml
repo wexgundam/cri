@@ -48,7 +48,7 @@
         <repository>
             <id>com.critc.cdpf</id>
             <name>com.critc.cdpf</name>
-            <url>http://10.1.117.52:8081/nexus/content/groups/com.critc/</url>
+            <url>http://localhost:8081/nexus/content/groups/com.critc/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -78,7 +78,7 @@
         <snapshotRepository>
             <id>com.critc.cri.snapshots</id>
             <name>com.critc.cri.snapshots</name>
-            <url>http://10.1.117.52:8081/nexus/content/repositories/com.critc.cri.snapshots/</url>
+            <url>http://localhost:8081/nexus/content/repositories/com.critc.cri.snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
