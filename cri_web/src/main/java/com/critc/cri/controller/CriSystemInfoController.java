@@ -28,7 +28,7 @@ import com.critc.util.string.StringUtil;
  * 
  * what:    信息化项目controller
  *
- * @author 戎珊 created on 2019年08月28日
+ * @author rs created on 2019年08月28日
  */
 @RequestMapping("/cri/railwaysysteminfo")
 @Controller
@@ -50,7 +50,7 @@ public class CriSystemInfoController {
 	 * 
 	 * @return index
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request) {
@@ -73,7 +73,7 @@ public class CriSystemInfoController {
 	 * @param id id
 	 * @return 到修改页面
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
@@ -94,7 +94,7 @@ public class CriSystemInfoController {
 	 * @param systemInfo systemInfo
 	 * @return 到操作提示页面
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/update")
 	public String update(HttpServletRequest request, HttpServletResponse response, @Valid SystemInfo systemInfo) {
@@ -122,7 +122,7 @@ public class CriSystemInfoController {
 	 * @param response response
 	 * @return 到新增页面
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) {
@@ -145,7 +145,7 @@ public class CriSystemInfoController {
 	 * @param
 	 * @return 到操作提示页面
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/add")
 	public String add(HttpServletRequest request, HttpServletResponse response, @Valid SystemInfo systemInfo) {
@@ -173,7 +173,7 @@ public class CriSystemInfoController {
 	 * @param id 系统id
 	 * @return 到操作提示页面
 	 *
-	 * @author 戎珊 created on 2019年08月28日
+		 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response, int id) {
