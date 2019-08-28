@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2019-08-27
  */
 @Repository
-public class SystemInfoDao extends BaseDao<SystemInfo, SysUserSearchVO> {
+public class SystemInfoDao extends BaseDao<SystemInfo, SystemInfo> {
 
     /**
      * what:    添加

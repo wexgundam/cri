@@ -30,8 +30,7 @@ public class SystemInfoService {
      */
     public int add(SystemInfo systemInfo) {
         int flag = 0;
-        int count =0;
-    //    int count = systemInfoDao.getNameNum(systemInfo);
+        int count = systemInfoDao.getNameNum(systemInfo);
         if (count > 0) {
             flag = 2;
         }
@@ -53,8 +52,7 @@ public class SystemInfoService {
      */
     public int update(SystemInfo systemInfo) {
         int flag = 0;
-        int count =0;
-      //  int count = systemInfoDao.getNameNum(systemInfo);
+        int count = systemInfoDao.getNameNum(systemInfo);
         if (count > 0) {
             flag = 2;
         }
