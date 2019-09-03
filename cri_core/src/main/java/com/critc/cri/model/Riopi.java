@@ -1,11 +1,17 @@
 package com.critc.cri.model;
 
+
 import java.util.Date;
 
 /**
- * Created by LXY777 on 2019-08-16.
+ *
+ * what: 部门实体类
+ *
+ *
+ * @author 李红 created on 2017年10月30日
  */
 public class Riopi {
+
     /**
      *主键，由SEQ_T_EXISTING_PROJECT生成
      */
@@ -199,4 +205,5 @@ public class Riopi {
     public void setLastEditedAt(Date lastEditedAt) {
         this.lastEditedAt = lastEditedAt;
     }
+
 }
