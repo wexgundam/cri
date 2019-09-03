@@ -6,6 +6,7 @@
 package com.critc.cri.dao;
 
 import com.critc.cri.model.ExistingProject;
+import com.critc.cri.vo.ExistingProjectSearchVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class TestExistingProjectDao {
     @Test
     public void testAdd() {
         ExistingProject existingProject = new ExistingProject();
-        existingProject.setName("aaaaa");
+        existingProject.setName("aaaab");
         existingProject.setConstructionDepartmentId(1);
         existingProject.setConstructionDepartmentName("eeeeee");
         existingProject.setCreatorId(2);
@@ -75,6 +76,14 @@ public class TestExistingProjectDao {
     public void testGet() {
         System.out.println(existingProjectDao.get(5));
     }
+
+    @Test
+    public void testCount(){
+        ExistingProjectSearchVO existingProjectSearchVO = new ExistingProjectSearchVO();
+        System.out.println("~~~~~~~~~:"+existingProjectDao.count(existingProjectSearchVO));
+    }
+
+
 
 
 }

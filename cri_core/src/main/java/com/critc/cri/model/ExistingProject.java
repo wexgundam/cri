@@ -5,6 +5,7 @@
  */
 package com.critc.cri.model;
 
+
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
  *
  * @author 靳磊 created on 2019/8/2
  */
-public class ExistingProject {
+public class ExistingProject{
     /**
      *主键，由SEQ_T_EXISTING_PROJECT生成
      */
@@ -53,6 +54,18 @@ public class ExistingProject {
     private String lastEditorRealName;
     private Date lastEditedAt;
 
+    /**
+     * 是否能够删除，0:不可以被删除；1：可以被删除。默认为1
+     */
+    private int deletable = 1;
+
+    public int getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(int deletable) {
+        this.deletable = deletable;
+    }
 
 
     @Override
