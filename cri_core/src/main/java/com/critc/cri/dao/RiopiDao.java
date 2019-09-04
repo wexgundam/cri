@@ -183,4 +183,18 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
 //        }
         return sql;
     }
+    /**
+     *
+     * what: 获取所有目录
+     *
+     * @return list
+     *
+     * @author lxy created on 2019年9月4日
+     */
+    public List<Riopi> list() {
+        String sql = "select t.id,t.name,t.parent_id,(select count(*) from t_riopi where parent_id=t.id) cnt," +
+                "(select name from t_riopi where id=t.parent_id)parentName " +
+                "from t_riopi t order by parent_id, display_order";
+        return list(sql);
+    }
 }
