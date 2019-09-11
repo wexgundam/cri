@@ -34,7 +34,7 @@ public class TestExistingProjectDao {
     @Test
     public void testAdd() {
         ExistingProject existingProject = new ExistingProject();
-        existingProject.setName("aaaab");
+        existingProject.setName("@@@@@");
         existingProject.setConstructionDepartmentId(1);
         existingProject.setConstructionDepartmentName("eeeeee");
         existingProject.setCreatorId(2);
@@ -46,35 +46,35 @@ public class TestExistingProjectDao {
         existingProject.setProjectProgressName("IIIII");
         existingProject.setProjectTypeCode("jjjjjj");
         existingProject.setProjectTypeName("kkkkk");
-        existingProject.setRisId(5);
+        existingProject.setRisId(8);
         existingProject.setReviewPassedCpc("lllll");
         existingProject.setReviewPassedDar("mmmmm");
         existingProject.setReviewPassedFsr("nnnnn");
         existingProject.setReviewPassedTts("ooooo");
         existingProject.setConstructionDepartmentName("ppppp");
         existingProject.setConstructionDepartmentId(6);
+        existingProject.setRisName("from rs");
         existingProjectDao.add(existingProject);
     }
 
 
     @Test
     public void testDelete() {
-        existingProjectDao.delete(3);
-        existingProjectDao.delete(2);
-        existingProjectDao.delete(1);
+        existingProjectDao.delete(94);
     }
 
     @Test
     public void testUpdate() {
         ExistingProject existingProject = new ExistingProject();
-        existingProject.setId(4);
-        existingProject.setName("aaaaa*");
+        existingProject.setId(87);
+        existingProject.setName("￥");
+        existingProject.setRisName("testing change content...");
         existingProjectDao.update(existingProject);
     }
 
     @Test
     public void testGet() {
-        System.out.println(existingProjectDao.get(5));
+        System.out.println(existingProjectDao.get(108));
     }
 
     @Test

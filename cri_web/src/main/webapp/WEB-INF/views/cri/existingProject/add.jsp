@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ include file="../../common/taglib.jsp" %>
+<%--<%@ include file="../../common/taglib.jsp" %>--%>
 <html>
 <head>
     <title>既有信息化项目添加</title>
@@ -36,14 +36,28 @@
                                value="" maxlength="20"> <label id="projectTypeCodeTip"></label>
                     </div>
                 </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目类型名称：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="projectTypeName" name="projectTypeName" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="" maxlength="20"> <label id="projectTypeNameTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目类型名称：</label>
                     <div class="col-md-10">
-                        <input id="projectTypeName" name="projectTypeName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="" maxlength="20"> <label id="projectTypeNameTip"></label>
+                        <form:select path="existingProject.projectProgressName"
+                                     class="form-control input-inline  input-xlarge" name="projectProgressName"
+                                     id="type">
+                            <option value="">请选择项目类型</option>
+                            <form:options items="${listProjectType}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目进度编码：</label>
                     <div class="col-md-10">
@@ -52,29 +66,48 @@
                                value="" maxlength="20"> <label id="projectProgressCodeTip"></label>
                     </div>
                 </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目进度名称：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="projectProgressName" name="projectProgressName" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="" maxlength="20"> <label id="projectProgressNameTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目进度名称：</label>
                     <div class="col-md-10">
-                        <input id="projectProgressName" name="projectProgressName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="" maxlength="20"> <label id="projectProgressNameTip"></label>
+                        <form:select path="existingProject.projectTypeName"
+                                     class="form-control input-inline  input-xlarge" name="projectTypeName"
+                                     id="type">
+                            <option value="">请选择项目进度</option>
+                            <form:options items="${listProjectProgress}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">通过评审的需求分析报告：</label>
-                    <div class="col-md-10">
-                        <textarea rows="5" cols="60" id="reviewPassedDar" name="reviewPassedDar"  class="form-control input-inline  input-xlarge" maxlength="50"></textarea>
-                        <label id="reviewPassedDarTip"></label>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">通过评审的需求分析报告：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<textarea rows="5" cols="60" id="reviewPassedDar" name="reviewPassedDar"  class="form-control input-inline  input-xlarge" maxlength="50"></textarea>--%>
+                        <%--<label id="reviewPassedDarTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
                     <div class="col-md-10">
-                        <input id="reviewPassedCpc" name="reviewPassedCpc" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="" maxlength="20"> <label id="reviewPassedCpcTip"></label>
+                        <form:select path="existingProject.reviewPassedCpc"
+                                     class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
+                                     id="type">
+                            <option value="">请确定网络安全等级</option>
+                            <form:options items="${listNetworkSecurity}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
+
             </div>
             <div class="form-actions">
                 <div class="row">

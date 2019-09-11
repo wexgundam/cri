@@ -4,8 +4,6 @@
  * Module Name:TODO:Module
  */
 package com.critc.cri.model;
-
-
 import java.util.Date;
 
 /**
@@ -25,6 +23,10 @@ public class ExistingProject{
      *铁路信息系统主键
      */
     private int risId;
+    /**
+     *铁路信息系统名称
+     */
+    private String risName;
     /**
      *铁路信息系统名称
      */
@@ -87,6 +89,7 @@ public class ExistingProject{
         return "ExistingProject{" +
                 "id=" + id +
                 ", res_id=" + risId +
+                ",ris_name="+risName+
                 ", name='" + name + '\'' +
                 ", projectTypeCode='" + projectTypeCode + '\'' +
                 ", projectTypeName='" + projectTypeName + '\'' +
@@ -107,11 +110,9 @@ public class ExistingProject{
                 ", lastEditedAt=" + lastEditedAt +
                 '}';
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -124,6 +125,10 @@ public class ExistingProject{
     public void setRisId(int risId) {
         this.risId = risId;
     }
+
+    public String getRisName() {return risName;}
+
+    public void setRisName(String risName) {this.risName = risName; }
 
     public String getName() {
         return name;

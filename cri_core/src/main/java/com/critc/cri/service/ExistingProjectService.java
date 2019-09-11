@@ -1,11 +1,12 @@
 package com.critc.cri.service;
 
 import com.critc.cri.dao.ExistingProjectDao;
+import com.critc.cri.dao.RailwayInformationSystemDao;
 import com.critc.cri.model.ExistingProject;
+import com.critc.cri.model.RailwayInformationSystem;
+import com.critc.cri.model.Riopi;
 import com.critc.cri.vo.ExistingProjectSearchVO;
-
-import com.critc.sys.model.SysRole;
-import com.critc.util.cache.EhCacheUtil;
+import com.critc.cri.vo.RailwayInformationSystemSearchVO;
 import com.critc.util.string.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class ExistingProjectService {
      *
      * @param existingProjectSearchVO 角色查询VO
      * @return 查询的list
-     * @author 李红 created on 2017年11月6日
+     * @author
      */
     public List<ExistingProject> list(ExistingProjectSearchVO existingProjectSearchVO) {
         return existingProjectsDao.list(existingProjectSearchVO);
@@ -46,9 +47,9 @@ public class ExistingProjectService {
     /**
      * what: 新增角色，同时新增对应的权限
      *
-     * @param sysRole     sysRole
-     * @param moduleArr   moduleArr
-     * @param functionArr functionArr
+     * @param
+     * @param
+     * @param
      *
      * @return flag 0、失败，1、成功，2、角色名称已经存在
      *
@@ -93,7 +94,7 @@ public class ExistingProjectService {
      *
      * @return flag 0、失败，1、成功，2、存在系统用户不能删除
      *
-     * @author 孔垂云 created on 2017年11月6日
+     * @author
      */
     public int delete(int id) {
         int flag = 0;
@@ -106,4 +107,19 @@ public class ExistingProjectService {
         }
         return flag;
     }
+//    /**
+//     * what: 生成Ztree的树节点,新增机构时使用
+//     */
+//    public String createZtreeByModule() {
+//        // 机构列表
+//        List<ExistingProject> listModule = existingProjectsDao.list();
+//        //List<SysDepartment> listModule = sysDepartmentDao.list();
+//        StringBuilder sb = new StringBuilder();
+//        for (ExistingProject existingModule: listModule) {
+//            sb.append("{id : \"" + existingModule.getId() + "\",pId :\"" + existingModule.getParentId() + "\",name :\""
+//                    + existingModule.getName() + "\",open : false");
+//            sb.append("},");
+//        }
+//        return StringUtil.subTract(sb.toString());
+//    }
 }
