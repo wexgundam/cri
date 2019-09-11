@@ -4,6 +4,7 @@ import com.critc.cri.dao.RiopiDao;
 import com.critc.cri.model.Riopi;
 import com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.page.PageSearchVO;
+import com.critc.util.string.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,13 @@ public class RiopiService  extends PageSearchVO{
         return riopiDao.get(id);
     }
     public List<Riopi> list(RiopiSearchVO riopiSearchVO) {
-        // 获取所有部门
+        // 获
         List<Riopi> list = riopiDao.list(riopiSearchVO);
+        return list;
+    }
+    public List<Riopi> list() {
+        // 获取所有部门
+        List<Riopi> list = riopiDao.list();
         return list;
     }
     /**
@@ -85,5 +91,24 @@ public class RiopiService  extends PageSearchVO{
      */
     public int delete(int id) {
             return riopiDao.delete(id);
+    }
+    /**
+     *
+     * what: 生成Ztree的树节点,新增机构时使用
+     *
+     * @return Ztree
+     *
+     * @author 李红 created on 2017年10月30日
+     */
+    public String createZtreeByModule() {
+        // 信息化名称列表
+        List<Riopi> listModule =riopiDao.list();
+        StringBuilder sb = new StringBuilder();
+        for (Riopi sysModule : listModule) {
+            sb.append("{id : \"" + sysModule.getId() + "\",pId :\"" + sysModule.getParentId() + "\",name :\""
+                    + sysModule.getName() + "\",open : false");
+            sb.append("},");
+        }
+        return StringUtil.subTract(sb.toString());
     }
 }
