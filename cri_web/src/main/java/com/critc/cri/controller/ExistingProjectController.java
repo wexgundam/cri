@@ -8,8 +8,10 @@ package com.critc.cri.controller;
 import com.critc.core.pub.PubConfig;
 import com.critc.cri.model.ExistingProject;
 import com.critc.cri.service.ExistingProjectService;
+import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 
+import com.critc.sys.service.SysDicService;
 import com.critc.sys.service.SysResourceService;
 
 import com.critc.util.code.GlobalCode;
@@ -41,8 +43,16 @@ public class ExistingProjectController{
     /**
      * 资源Service
      */
+    /**
+     * 信息系统Service
+     */
     @Autowired
-    private SysResourceService sysResourceService;
+    private RailwayInformationSystemService railwayInformationSystemService;
+    /**
+     * 字典Sevice
+     */
+    @Autowired
+    private SysDicService sysDicService;
     /**
      * what: 自动补全主页
      * when: 请求访问自动补全主页时
@@ -86,19 +96,26 @@ public class ExistingProjectController{
         return url;
     }
     /**
-     *
-     * what: 新增角色
-     *
+     * what: 新增
      * @param request request
-     * @param
      * @return 到新增界面
      * @author 卢薪竹
      */
     @RequestMapping("/toAdd")
         public ModelAndView toAdd(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
+        ExistingProject existingProject = new ExistingProject();
+        // 添加字典 项目类型 / 进度编码 / 网络安全等级
+        mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+        mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+        mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         mv.setViewName("/cri/existingproject/add");
-        // 设置返回的url
+
+        // 设置返回的url：方法1
+//        BackUrlUtil.setBackUrl(mv, request);
+//        return mv;
+        // 设置返回的url：方法2
+        mv.addObject("existingProject",existingProject);
         BackUrlUtil.setBackUrl(mv, request);
         return mv;
     }
@@ -114,7 +131,15 @@ public class ExistingProjectController{
     public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
         ModelAndView mv = new ModelAndView();
         ExistingProject existingProject = existingProjectService.get(id);
+        // 添加字典 项目类型 / 进度编码 / 网络安全等级
+        mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+        mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+        mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         mv.addObject("existingProject", existingProject);
+
+        //获取其他表结构
+        String ztree = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("zTree", ztree);
         mv.setViewName("/cri/existingproject/update");
         // 设置返回的url
         BackUrlUtil.setBackUrl(mv, request);
@@ -122,7 +147,7 @@ public class ExistingProjectController{
     }
     /**
      *
-     * what: 新增角色
+     * what: 新增
      *
      * @param request request
      * @param response response
@@ -155,14 +180,14 @@ public class ExistingProjectController{
     }
     /**
      *
-     * what: 修改角色
+     * what: 修改
      *
      * @param request request
      * @param response response
      * @param
      * @return 到操作提示页面
      *
-     * @author 孔垂云 created on 2017年11月6日
+     * @author
      */
     @RequestMapping("/update")
     public String update(HttpServletRequest request, HttpServletResponse response, @Valid ExistingProject existingProject) {
@@ -183,8 +208,8 @@ public class ExistingProjectController{
     }
     /**
      *
-     * what: 删除角色
-     * @param id 角色id
+     * what: 删除
+     * @param
      * @return 到操作提示页面
      *
      * @author

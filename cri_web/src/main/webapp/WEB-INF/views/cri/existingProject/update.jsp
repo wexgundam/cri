@@ -7,7 +7,6 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="../../common/taglib.jsp" %>
-<html>
 <head>
     <title>既有信息化项目添加</title>
 </head>
@@ -21,11 +20,31 @@
             <input type="hidden" name="functionArr" id="functionArr" value="">
             <div class="form-body">
                 <div class="form-group">
-                    <label class="col-md-2 control-label">既有信息系统名称：</label>
                     <div class="col-md-10">
+                        <label class="col-md-2 control-label">既有信息系统名称：</label>
                         <input id="name" name="name" type="text" class="form-control input-inline  input-xlarge"
                                placeholder=""
                                value="${existingProject.name}" maxlength="20"> <label id="nameTip"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">归属信息化总体规划目录名称：</label>
+                    <div class="col-md-9">
+                        <div class="input-group input-medium">
+                            <input type="text" id="risId" name="risId"
+                                   class="form-control" value="${existingProject.risId}"/>
+                            <input type="text" id="risName" name="risName"
+                                   readonly="readonly"
+                                   class="form-control  "
+                                   placeholder="" value="${existingProject.risName}"/>
+                            <span class="input-group-btn">
+                                            <button class="btn btn-primary" id="choice"
+                                                    onclick="javascript:getZtree()"
+                                                    type="button"><i class="fa fa-search"/></i>选择
+                                        </button>
+                                       </span>
+                        </div>
+                        <label id="departmentNameTip"></label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -39,9 +58,14 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目类型名称：</label>
                     <div class="col-md-10">
-                        <input id="projectTypeName" name="projectTypeName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.projectTypeName}" maxlength="20"> <label id="projectTypeNameTip"></label>
+                        <form:select path="existingProject.projectProgressName"
+                                     class="form-control input-inline  input-xlarge" name="projectProgressName"
+                                     id="type">
+                            <option value="">请选择项目类型</option>
+                            <form:options items="${listProjectType}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -55,25 +79,27 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目进度名称：</label>
                     <div class="col-md-10">
-                        <input id="projectProgressName" name="projectProgressName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.projectProgressName}" maxlength="20"> <label id="projectProgressNameTip"></label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">通过评审的需求分析报告：</label>
-                    <div class="col-md-10">
-                        <textarea id="reviewPassedDar" name="reviewPassedDar" rows="5" cols="60"   class="form-control input-inline  input-xlarge" maxlength="50"
-                        value="${existingProject.reviewPassedDar}"></textarea>
-                        <label id="reviewPassedDarTip"></label>
+                        <form:select path="existingProject.projectTypeName"
+                                     class="form-control input-inline  input-xlarge" name="projectTypeName"
+                                     id="type">
+                            <option value="">请选择项目进度</option>
+                            <form:options items="${listProjectProgress}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
                     <div class="col-md-10">
-                        <input id="reviewPassedCpc" name="reviewPassedCpc" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.reviewPassedCpc}" maxlength="20"> <label id="reviewPassedCpcTip"></label>
+                        <form:select path="existingProject.reviewPassedCpc"
+                                     class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
+                                     id="type">
+                            <option value="">请确定网络安全等级</option>
+                            <form:options items="${listNetworkSecurity}" itemValue="code"
+                                          itemLabel="name" />
+                        </form:select>
+                        <label id="typeTip"></label>
                     </div>
                 </div>
             </div>
@@ -90,7 +116,81 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="systemcontentList" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">选择归属既有信息系统</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="tree" class="ztree" style="width: 560px; overflow: auto;"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="javascript:getSelected();">确认</button>
+                <button type="button" class="btn " data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
-</html>
+
+<critc-script>
+    <script src="${staticServer}/assets/cropper3.0/cropper.min.js"></script>
+    <script src="${staticServer}/assets/cropper3.0/main.js"></script>
+    <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function getZtree() {
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: ""
+                    }
+                }
+            };
+            var zNodes = [${zTree}]
+            jQuery(document).ready(function () {
+                var t = $("#tree");
+                t = $.fn.zTree.init(t, setting, zNodes);
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+            });
+            $('#systemcontentList').modal('show');
+        }
+        function getSelected() {
+            var treeObj = $.fn.zTree.getZTreeObj("tree");
+            var nodes = treeObj.getSelectedNodes();
+            if (nodes.length > 0) {
+                $("#risId").val(nodes[0].id);
+                $("#risName").val(nodes[0].name);
+                $('#systemcontentList').modal('hide');
+            }
+            else return;
+        }
+        function showSelTree() {
+            $.ajax({
+                type: 'GET',
+                url: 'systemContentTree.htm',
+                contentType : "text/plain; charset=UTF-8",
+                dataType: 'json',
+                success: function (result) {
+                    if (result["success"]) {
+                        ztree = result.ztree;
+                        getZtree(ztree);
+                        $('#systemcontentList').modal('show');
+                    }
+                },
+                fail:function (result) {
+                    console.log(result);
+                }
+
+            });
+        }
+    </script>
+</critc-script>
+
 

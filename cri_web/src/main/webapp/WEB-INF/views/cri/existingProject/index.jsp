@@ -51,6 +51,7 @@
             <tr>
                 <th width=60>#</th>
                 <th >既有信息系统名称</th>
+                <th>归属信息系统名称</th>
                 <th>建设单位名称</th>
                 <th >上次修改人</th>
                 <th width=160>上次修改时间</th>
@@ -61,9 +62,8 @@
             <c:forEach items="${list }" var="existingProject" varStatus="st">
                 <tr>
                     <td>${st.index+1 }</td>
-                    <td>
-                        ${existingProject.name}
-                    </td>
+                    <td>${existingProject.name} </td>
+                    <td>${existingProject.risName}</td>
                     <td>${existingProject.constructionDepartmentName}</td>
                     <td>${existingProject.lastEditorRealName }</td>
                     <th width=120><fmt:formatDate value="${existingProject.lastEditedAt}" pattern="yyyy-MM-dd HH:mm"/></th>
@@ -80,6 +80,10 @@
         </table>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">${ pageNavigate.pageModel}</div>
+</div>
+
 </body>
 
 <critc-script>

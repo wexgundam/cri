@@ -54,7 +54,8 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
                 "created_at," +
                 "last_editor_id," +
                 "last_editor_real_name," +
-                "last_edited_at) ";
+                "last_edited_at, "+
+                "ris_name) ";
         sql += "values(seq_t_existing_project.nextval," +
                 ":risId," +
                 ":name," +
@@ -74,7 +75,8 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
                 "sysdate," +
                 ":lastEditorId," +
                 ":lastEditorRealName," +
-                "sysdate) ";
+                "sysdate," +
+                ":risName) ";
         return insertForId(sql, existingProject, "id");
     }
     public int delete(int id) {
@@ -82,7 +84,9 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
         return delete(sql, id);
     }
     public int update(ExistingProject existingProject) {
-        String sql = "update t_existing_project set ris_id=:risId," +
+        String sql = "update t_existing_project set " +
+                "ris_id=:risId," +
+                "ris_name=:risName,"+
                 "name=:name," +
                 "project_type_code=:projectTypeCode," +
                 "project_type_Name=:projectTypeName," +
@@ -110,6 +114,7 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
     public ExistingProject get(int id) {
         String sql = "select t.id," +
                 "t.ris_id, " +
+                "t.ris_name, "+
                 "t.name," +
                 "t.project_type_code," +
                 "t.project_type_name," +
@@ -131,21 +136,21 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
         return get(sql, id);
     }
     /**
-     * what:角色列表
+     * what:既有信息系统列表
      * @param : existingProjectSearchVO 角色查询VO
      * @return: list
      * @Description : 
      * @author 卢薪竹 created by 8:52 2019/8/28
     */
     public List<ExistingProject> list(ExistingProjectSearchVO existingProjectSearchVO) {
-        String sql = "select t.id,t.name,t.construction_department_name,t.last_editor_real_name,t.last_edited_at from t_existing_project t where 1=1";
+        String sql = "select t.id,t.ris_name,t.name,t.construction_department_name,t.last_editor_real_name,t.last_edited_at from t_existing_project t where 1=1";
         sql += createSearchSql(existingProjectSearchVO);
         //sql += " order by display_order asc ";
         sql = PageUtil.createOraclePageSQL(sql, existingProjectSearchVO.getPageIndex());
         return list(sql, existingProjectSearchVO);
     }
     /**
-     * what: 查询角色总数
+     * what: 查询既有项目总数
      * @param : existingProjectSearchVO 角色查询VO
      * @return: int
      * @Description : 
