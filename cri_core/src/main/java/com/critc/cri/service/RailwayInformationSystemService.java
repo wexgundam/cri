@@ -4,6 +4,7 @@ import com.critc.cri.dao.RailwayInformationSystemDao;
 import com.critc.cri.model.RailwayInformationSystem;
 import com.critc.cri.vo.RailwayInformationSystemSearchVO;
 import com.critc.util.model.ComboboxVO;
+import com.critc.util.string.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,5 +114,23 @@ public class RailwayInformationSystemService {
     public int count(RailwayInformationSystemSearchVO railwayInformationSystemSearchVO) {
         return railwayInformationSystemDao.count(railwayInformationSystemSearchVO);
     }
-
+    /**
+     *
+     * what: 生成Ztree的树节点,新增机构时使用
+     *
+     * @return Ztree
+     *
+     * @author 李红 created on 2017年10月30日
+     */
+    public String createZtreeByModule() {
+        // 信息化名称列表
+        List<RailwayInformationSystem> listModule =railwayInformationSystemDao.list();
+        StringBuilder sb = new StringBuilder();
+        for (RailwayInformationSystem sysModule : listModule) {
+            sb.append("{id : \"" + sysModule.getId()  + "\",name :\""
+                    + sysModule.getName() + "\",open : false");
+            sb.append("},");
+        }
+        return StringUtil.subTract(sb.toString());
+    }
 }

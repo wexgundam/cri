@@ -4,6 +4,7 @@ import com.critc.core.dao.BaseDao;
 import com.critc.cri.model.RailwayInformationSystem;
 import com.critc.cri.vo.RailwayInformationSystemSearchVO;
 import com.critc.util.model.ComboboxVO;
+import com.critc.util.page.PageUtil;
 import com.critc.util.string.StringUtil;
 import org.springframework.stereotype.Repository;
 
@@ -90,7 +91,7 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
                 "t.last_edited_at from t_railway_information_system t where 1=1 ";
         sql += createSearchSql(railwayInformationSystemSearchVO);
         sql += " order by order_index asc ";
-      //  sql = PageUtil.createOraclePageSQL(sql, railwayInformationSystemSearchVO.getPageIndex());
+        sql = PageUtil.createOraclePageSQL(sql, railwayInformationSystemSearchVO.getPageIndex());
         return list(sql, railwayInformationSystemSearchVO);
     }
     /**
@@ -136,5 +137,17 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
     public List<ComboboxVO> listCombo() {
         String sql = "select t.id value,t.name content from t_riopi t where 1=1 order by id ";
         return listCombobox(sql);
+    }
+    /**
+     *
+     * what: 获取所有目录
+     *
+     * @return list
+     *
+     * @author rs created on 2019年9月4日
+     */
+    public List<RailwayInformationSystem> list() {
+        String sql = "select t.id,t.name from t_railway_information_system t ";
+        return list(sql);
     }
 }
