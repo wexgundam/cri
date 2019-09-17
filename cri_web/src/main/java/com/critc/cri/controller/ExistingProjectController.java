@@ -12,7 +12,6 @@ import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 
 import com.critc.sys.service.SysDicService;
-import com.critc.sys.service.SysResourceService;
 
 import com.critc.util.code.GlobalCode;
 import com.critc.util.page.PageNavigate;
@@ -148,7 +147,6 @@ public class ExistingProjectController{
     /**
      *
      * what: 新增
-     *
      * @param request request
      * @param response response
      * @param
@@ -159,8 +157,8 @@ public class ExistingProjectController{
     @RequestMapping("/add")
     public String add(HttpServletRequest request, HttpServletResponse response, @Valid ExistingProject existingProject) {
         // 创建人
-        existingProject.setCreatorId(SessionUtil.getUserId(request));
-        existingProject.setCreatorRealName(SessionUtil.getUserRealName(request));
+        //existingProject.setCreatorId(SessionUtil.getUserId(request));
+        //existingProject.setCreatorRealName(SessionUtil.getUserRealName(request));
         // 修改人
         existingProject.setLastEditorId(SessionUtil.getUserId(request));
         existingProject.setLastEditorRealName(SessionUtil.getUserRealName(request));

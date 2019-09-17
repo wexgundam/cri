@@ -56,13 +56,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目类型名称：</label>
+                    <label class="col-md-2 control-label">项目类型：</label>
                     <div class="col-md-10">
-                        <form:select path="existingProject.projectProgressName"
-                                     class="form-control input-inline  input-xlarge" name="projectProgressName"
+                        <form:select path="existingProject.projectTypeName"
+                                     class="form-control input-inline  input-xlarge" name="projectTypeName"
                                      id="type">
                             <option value="">请选择项目类型</option>
-                            <form:options items="${listProjectType}" itemValue="code"
+                            <form:options items="${listProjectType}" itemValue="name"
                                           itemLabel="name" />
                         </form:select>
                         <label id="typeTip"></label>
@@ -79,11 +79,11 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目进度名称：</label>
                     <div class="col-md-10">
-                        <form:select path="existingProject.projectTypeName"
-                                     class="form-control input-inline  input-xlarge" name="projectTypeName"
+                        <form:select path="existingProject.projectProgressName"
+                                     class="form-control input-inline  input-xlarge" name="projectProgressName"
                                      id="type">
                             <option value="">请选择项目进度</option>
-                            <form:options items="${listProjectProgress}" itemValue="code"
+                            <form:options items="${listProjectProgress}" itemValue="name"
                                           itemLabel="name" />
                         </form:select>
                         <label id="typeTip"></label>
@@ -96,10 +96,43 @@
                                      class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
                                      id="type">
                             <option value="">请确定网络安全等级</option>
-                            <form:options items="${listNetworkSecurity}" itemValue="code"
+                            <form:options items="${listNetworkSecurity}" itemValue="name"
                                           itemLabel="name" />
                         </form:select>
                         <label id="typeTip"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">建设单位ID：</label>
+                    <div class="col-md-10">
+                        <input id="constructionDepartmentId" name="constructionDepartmentId" type="text" class="form-control input-inline  input-xlarge"
+                               placeholder=""
+                               value="${existingProject.constructionDepartmentId}" maxlength="20"> <label id="constructionDepartmentIdTip"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">建设单位名称：</label>
+                    <div class="col-md-10">
+                        <input id="constructionDepartmentName" name="constructionDepartmentName" type="text" class="form-control input-inline  input-xlarge"
+                               placeholder=""
+                               value="${existingProject.constructionDepartmentName}" maxlength="20"> <label id="constructionDepartmentNameTip"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">创建人ID：</label>
+                    <div class="col-md-10">
+                        <input id="creatorIndex" name="creatorIndex" type="text" class="form-control input-inline  input-xlarge"
+                               placeholder=""
+                               value="${existingProject.creatorId}" maxlength="20"> <label id="creatorIndexTip"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">创建人实名：</label>
+                    <div class="col-md-10">
+                        <input id="creatorRealName" name="creatorRealName" type="text" class="form-control input-inline  input-xlarge"
+                               placeholder=""
+                               value="${existingProject.creatorRealName}" maxlength="20"> <label id="creatorRealNameTip"></label>
                     </div>
                 </div>
             </div>
