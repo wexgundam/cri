@@ -101,7 +101,7 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
                 "order_index=:orderIndex," +
                 "last_editor_id=:lastEditorId," +
                 "last_editor_real_name=:lastEditorRealName," +
-                "last_edited_at=:lastEditedAt where id=:id";
+                "last_edited_at=sysdate where id=:id";
         return update(sql, existingProject);
     }
     /**
@@ -143,7 +143,16 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
      * @author 卢薪竹 created by 8:52 2019/8/28
     */
     public List<ExistingProject> list(ExistingProjectSearchVO existingProjectSearchVO) {
-        String sql = "select t.id,t.ris_name,t.name,t.construction_department_name,t.last_editor_real_name,t.last_edited_at from t_existing_project t where 1=1";
+        String sql = "select t.id," +
+                "t.name," +
+                "t.ris_name," +
+                "t.project_type_name,"+
+                "t.project_progress_name,"+
+                "t.review_passed_cpc,"+
+                "t.construction_department_name," +
+                "t.creator_real_name,"+
+                "t.last_editor_real_name," +
+                "t.last_edited_at from t_existing_project t where 1=1";
         sql += createSearchSql(existingProjectSearchVO);
         //sql += " order by display_order asc ";
         sql = PageUtil.createOraclePageSQL(sql, existingProjectSearchVO.getPageIndex());
