@@ -75,7 +75,7 @@ public class RailwayInformationSystemController {
 		// 设置分页的变量
 		mv.addObject("pageNavigate", pageNavigate);
 		mv.addObject("backUrl", StringUtil.encodeUrl(url));
-		mv.addObject("listContent", railwayInformationSystemService.listCombo());// 信息系统列表
+		mv.addObject("listContent", riopiService.listCombo());// 信息系统列表
 		mv.addObject("list", list);
 		return mv;
 	}
