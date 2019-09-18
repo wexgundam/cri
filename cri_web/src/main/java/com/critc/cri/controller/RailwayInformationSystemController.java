@@ -12,16 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.critc.core.pub.PubConfig;
+import com.critc.cri.model.RailwayInformationSystem;
+import com.critc.cri.service.RiopiService;
 import com.critc.util.code.GlobalCode;
-import com.critc.util.session.SessionUtil;
+import com.critc.util.page.PageNavigate;
 import com.critc.util.string.BackUrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.critc.cri.model.SystemInfo;
-import com.critc.cri.service.SystemInfoService;
+import com.critc.cri.vo.RailwayInformationSystemSearchVO;
+import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.util.string.StringUtil;
 
 /**
@@ -30,14 +32,19 @@ import com.critc.util.string.StringUtil;
  *
  * @author rs created on 2019年08月28日
  */
-@RequestMapping("/cri/railwaysysteminfo")
+@RequestMapping("/cri/railwayinformationsystem")
 @Controller
-public class CriSystemInfoController {
+public class RailwayInformationSystemController {
 	/**
 	 * 信息系统Service
 	 */
 	@Autowired
-	private SystemInfoService systemInfoService;
+	private RailwayInformationSystemService railwayInformationSystemService;
+	/**
+	 * 信息系统Service
+	 */
+	@Autowired
+	private RiopiService riopiService;
 	/**
 	 * 全局参数配置
 	 */
@@ -53,13 +60,22 @@ public class CriSystemInfoController {
 	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest request) {
+	public ModelAndView index(HttpServletRequest request,RailwayInformationSystemSearchVO railwayInformationSystemSearchVO) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/cri/railwaysysteminfo/index");
-		List<SystemInfo> list = systemInfoService.list();
+		mv.setViewName("/cri/railwayinformationsystem/index");
+		// 获取查询总数
+		int recordCount = railwayInformationSystemService.count(railwayInformationSystemSearchVO);
+		List<RailwayInformationSystem> list = railwayInformationSystemService.list(railwayInformationSystemSearchVO);
+	//	List<RailwayInformationSystemSearchVO> listCombo = systemInfoService.listCombo();
 		// 把获取的记录放到mv里面
-		String url = pubConfig.getDynamicServer() + "/cri/railwaysysteminfo/index.htm?";
+		String url = pubConfig.getDynamicServer() + "/cri/railwayinformationsystem/index.htm?";
+		// 定义分页对象
+		PageNavigate pageNavigate = new PageNavigate(url, railwayInformationSystemSearchVO.getPageIndex(), recordCount);
+
+		// 设置分页的变量
+		mv.addObject("pageNavigate", pageNavigate);
 		mv.addObject("backUrl", StringUtil.encodeUrl(url));
+		mv.addObject("listContent", riopiService.listCombo());// 信息系统列表
 		mv.addObject("list", list);
 		return mv;
 	}
@@ -78,9 +94,9 @@ public class CriSystemInfoController {
 	@RequestMapping("/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
 		ModelAndView mv = new ModelAndView();
-		SystemInfo systemInfo = systemInfoService.get(id);
-		mv.addObject("systeminfo", systemInfo);
-		mv.setViewName("/cri/railwaysysteminfo/update");
+		RailwayInformationSystem railwayInformationSystem = railwayInformationSystemService.get(id);
+		mv.addObject("systeminfo", railwayInformationSystem);
+		mv.setViewName("/cri/railwayinformationsystem/update");
 		// 设置返回的url
 		BackUrlUtil.setBackUrl(mv, request);
 		return mv;
@@ -91,15 +107,15 @@ public class CriSystemInfoController {
 	 *
 	 * @param request request
 	 * @param response response
-	 * @param systemInfo systemInfo
+	 * @param railwayInformationSystem railwayInformationSystem
 	 * @return 到操作提示页面
 	 *
 	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/update")
-	public String update(HttpServletRequest request, HttpServletResponse response, @Valid SystemInfo systemInfo) {
+	public String update(HttpServletRequest request, HttpServletResponse response, @Valid RailwayInformationSystem railwayInformationSystem) {
 
-		int flag = systemInfoService.update(systemInfo);
+		int flag = railwayInformationSystemService.update(railwayInformationSystem);
 		if (flag == 0) {
 			// 修改失败
 			return "forward:/error.htm?resultCode=" + GlobalCode.OPERA_FAILURE;
@@ -129,10 +145,10 @@ public class CriSystemInfoController {
 		ModelAndView mv = new ModelAndView();
 		// 部门列表
 	//	mv.addObject("listType", sysDicService.getByCategory("DEPARTMENT_TYPE"));
-		mv.setViewName("/cri/railwaysysteminfo/add");
+		mv.setViewName("/cri/railwayinformationsystem/add");
 		// 设置返回的url
-		SystemInfo systemInfo = new SystemInfo();
-		mv.addObject("sysDepartment", systemInfo);
+		String ztree = riopiService.createZtreeByModule();// 信息系统列表
+		mv.addObject("zTree", ztree);
 		BackUrlUtil.setBackUrl(mv, request);
 		return mv;
 	}
@@ -148,9 +164,9 @@ public class CriSystemInfoController {
 	 * @author rs created on 2019年08月28日
 	 */
 	@RequestMapping("/add")
-	public String add(HttpServletRequest request, HttpServletResponse response, @Valid SystemInfo systemInfo) {
+	public String add(HttpServletRequest request, HttpServletResponse response, @Valid RailwayInformationSystem railwayInformationSystem) {
 
-		int flag = systemInfoService.add(systemInfo);
+		int flag = railwayInformationSystemService.add(railwayInformationSystem);
 		if (flag == 0) {
 			// msg=" + StringUtil.encodeUrl("系统新增失败");
 			return "forward:/error.htm?resultCode=" + GlobalCode.OPERA_FAILURE;
@@ -177,7 +193,7 @@ public class CriSystemInfoController {
 	 */
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response, int id) {
-		int flag = systemInfoService.delete(id);
+		int flag = railwayInformationSystemService.delete(id);
 		if (flag == 0) {
 			// 删除失败
 			return "forward:/error.htm?resultCode=" + GlobalCode.OPERA_FAILURE;
@@ -191,4 +207,5 @@ public class CriSystemInfoController {
 			return "forward:/success.htm?resultCode=" + GlobalCode.DELETE_SUCCESS;
 		}
 	}
+	
 }

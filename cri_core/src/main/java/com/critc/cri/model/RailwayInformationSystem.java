@@ -3,7 +3,7 @@ package com.critc.cri.model;
 /**
  * Created by rs on 2019-8-26.
  */
-public class SystemInfo {
+public class RailwayInformationSystem {
     /**
      *
      */
@@ -56,7 +56,7 @@ public class SystemInfo {
 
     @Override
     public String toString() {
-        return "SystemInfo{" +
+        return "RailwayInformationSystem{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", RIOPI_ID=" + RIOPI_ID +

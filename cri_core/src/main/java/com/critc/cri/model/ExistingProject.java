@@ -4,7 +4,6 @@
  * Module Name:TODO:Module
  */
 package com.critc.cri.model;
-
 import java.util.Date;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Date;
  *
  * @author 靳磊 created on 2019/8/2
  */
-public class ExistingProject {
+public class ExistingProject{
     /**
      *主键，由SEQ_T_EXISTING_PROJECT生成
      */
@@ -24,6 +23,10 @@ public class ExistingProject {
      *铁路信息系统主键
      */
     private int risId;
+    /**
+     *铁路信息系统名称
+     */
+    private String risName;
     /**
      *铁路信息系统名称
      */
@@ -53,6 +56,18 @@ public class ExistingProject {
     private String lastEditorRealName;
     private Date lastEditedAt;
 
+    /**
+     * 是否能够删除，0:不可以被删除；1：可以被删除。默认为1
+     */
+    private int deletable = 1;
+
+    public int getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(int deletable) {
+        this.deletable = deletable;
+    }
 
 
     @Override
@@ -74,6 +89,7 @@ public class ExistingProject {
         return "ExistingProject{" +
                 "id=" + id +
                 ", res_id=" + risId +
+                ",ris_name="+risName+
                 ", name='" + name + '\'' +
                 ", projectTypeCode='" + projectTypeCode + '\'' +
                 ", projectTypeName='" + projectTypeName + '\'' +
@@ -94,11 +110,9 @@ public class ExistingProject {
                 ", lastEditedAt=" + lastEditedAt +
                 '}';
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -111,6 +125,10 @@ public class ExistingProject {
     public void setRisId(int risId) {
         this.risId = risId;
     }
+
+    public String getRisName() {return risName;}
+
+    public void setRisName(String risName) {this.risName = risName; }
 
     public String getName() {
         return name;
