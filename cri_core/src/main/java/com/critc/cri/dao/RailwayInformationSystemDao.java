@@ -128,18 +128,6 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
     }
     /**
      *
-     * what: 角色下拉框
-     *
-     * @return list
-     *
-     * @author 李红 created on 2017年11月8日
-     */
-    public List<ComboboxVO> listCombo() {
-        String sql = "select t.id value,t.name content from t_riopi t where 1=1 order by id ";
-        return listCombobox(sql);
-    }
-    /**
-     *
      * what: 获取所有目录
      *
      * @return list
