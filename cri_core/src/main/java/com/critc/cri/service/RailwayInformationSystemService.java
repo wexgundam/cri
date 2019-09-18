@@ -96,12 +96,6 @@ public class RailwayInformationSystemService {
 
         return list;
     }
-    public List<ComboboxVO> listCombo() {
-        //获取数据集
-        List<ComboboxVO> list = railwayInformationSystemDao.listCombo();
-
-        return list;
-    }
     /**
      * what: 系统列表总数
      *
