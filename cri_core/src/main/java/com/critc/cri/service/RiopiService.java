@@ -6,6 +6,7 @@ import com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.page.PageSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.critc.util.model.ComboboxVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,4 +87,15 @@ public class RiopiService  extends PageSearchVO{
     public int delete(int id) {
             return riopiDao.delete(id);
     }
+
+    public int count(RiopiSearchVO riopiSearchVO) {
+        return riopiDao.count(riopiSearchVO);
+    }
+    public List<ComboboxVO> listCombo() {
+        //获取数据集
+        List<ComboboxVO> list = riopiDao.listCombo();
+
+        return list;
+    }
+
 }

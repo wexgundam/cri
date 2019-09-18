@@ -6,6 +6,7 @@ import com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.page.PageUtil;
 import com.critc.util.string.StringUtil;
 import org.springframework.stereotype.Repository;
+import com.critc.util.model.ComboboxVO;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
                 "from t_riopi t where 1=1 ";
         sql += createSearchSql(riopiSearchVO);
         sql += " order by id asc";
-      //  sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
+        sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
         return list(sql,riopiSearchVO);
     }
 //
@@ -182,5 +183,14 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
 //            sql += " and release_date like :releaseDateStr";
 //        }
         return sql;
+    }
+    public int count(RiopiSearchVO riopiSearchVO) {
+        String sql = "select count(*) from  t_riopi where 1=1 ";
+        sql += createSearchSql(riopiSearchVO);
+        return count(sql, riopiSearchVO);
+    }
+    public List<ComboboxVO> listCombo() {
+        String sql = "select t.id value,t.name content from t_riopi t where 1=1 order by id ";
+        return listCombobox(sql);
     }
 }
