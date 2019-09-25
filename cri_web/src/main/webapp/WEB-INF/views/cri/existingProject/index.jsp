@@ -50,12 +50,12 @@
             <thead>
             <tr>
                 <th width=60>#</th>
-                <th>既有信息系统名称</th>
+                <th>系统名称</th>
                 <th>归属信息系统名称</th>
                 <th>项目类型</th>
+                <th>项目进度</th>
                 <th>建设单位</th>
                 <th>创建人实名</th>
-                <%--<th>创建时间</th>--%>
 
                 <th>最后修改人</th>
                 <th width=160>最后修改时间</th>
@@ -69,6 +69,7 @@
                     <td>${existingProject.name} </td>
                     <td>${existingProject.risName}</td>
                     <td>${existingProject.projectTypeName}</td>
+                    <td>${existingProject.projectProgressName}</td>
                     <td>${existingProject.constructionDepartmentName}</td>
                     <td>${existingProject.creatorRealName}</td>
                     <td>${existingProject.lastEditorRealName }</td>

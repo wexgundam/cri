@@ -7,6 +7,7 @@ import com.critc.cri.model.RailwayInformationSystem;
 import com.critc.cri.model.Riopi;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 import com.critc.cri.vo.RailwayInformationSystemSearchVO;
+import com.critc.sys.model.SysDepartment;
 import com.critc.util.string.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,13 @@ public class ExistingProjectService {
     @Autowired
     private ExistingProjectDao existingProjectsDao;
 
+    /**
+     * what:根据id获取对象
+     * @param : id 部门id
+     * @return: 根据id查询的部门对象
+     * @Description : 
+     * @author 卢薪竹 created by 17:04 2019/9/20
+    */
     public ExistingProject get(int id) {
         return existingProjectsDao.get(id);
     }

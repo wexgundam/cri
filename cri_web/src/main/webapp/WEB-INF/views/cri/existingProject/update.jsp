@@ -10,6 +10,11 @@
 <head>
     <title>既有信息化项目添加</title>
 </head>
+<critc-css>
+    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/cropper.min.css"/>
+    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/main.css"/>
+    <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css" rel="stylesheet" type="text/css"/>
+</critc-css>
 <body>
 <div class="row">
     <div class="col-md-10">
@@ -203,25 +208,6 @@
                 $('#systemcontentList').modal('hide');
             }
             else return;
-        }
-        function showSelTree() {
-            $.ajax({
-                type: 'GET',
-                url: 'systemContentTree.htm',
-                contentType : "text/plain; charset=UTF-8",
-                dataType: 'json',
-                success: function (result) {
-                    if (result["success"]) {
-                        ztree = result.ztree;
-                        getZtree(ztree);
-                        $('#systemcontentList').modal('show');
-                    }
-                },
-                fail:function (result) {
-                    console.log(result);
-                }
-
-            });
         }
     </script>
 </critc-script>
