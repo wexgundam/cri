@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: DJF
+  User: 卢薪竹
   Date: 2019/8/30
   Time: 9:49
   To change this template use File | Settings | File Templates.
@@ -54,6 +54,7 @@
                 <th>归属信息系统名称</th>
                 <th>项目类型</th>
                 <th>项目进度</th>
+                <th>通过评审的网络安全定级</th>
                 <th>建设单位</th>
                 <th>创建人实名</th>
 
@@ -70,6 +71,7 @@
                     <td>${existingProject.risName}</td>
                     <td>${existingProject.projectTypeName}</td>
                     <td>${existingProject.projectProgressName}</td>
+                    <td>${existingProject.reviewPassedCpc}</td>
                     <td>${existingProject.constructionDepartmentName}</td>
                     <td>${existingProject.creatorRealName}</td>
                     <td>${existingProject.lastEditorRealName }</td>

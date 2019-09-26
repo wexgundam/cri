@@ -1,8 +1,3 @@
-/**
- * Copyright 2017 弘远技术研发中心. All rights reserved
- * Project Name:cdpf_v1
- * Module Name:web
- */
 package com.critc.cri.controller;
 
 import com.critc.core.pub.PubConfig;
@@ -116,9 +111,9 @@ public class ExistingProjectController{
         mv.setViewName("/cri/existingproject/add");
         //获取戎珊列表
         String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
         //获取建设单位zTree
         String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
-        mv.addObject("ztreeRis", ztreeRis);
         mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
         // 设置返回的url：方法1
         //  BackUrlUtil.setBackUrl(mv, request);
@@ -144,11 +139,14 @@ public class ExistingProjectController{
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        mv.addObject("existingProject", existingProject);
+        //获取戎珊列表
+        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
+        //获取建设单位zTree
+        String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
+        mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
 
-        //获取其他表结构
-        String ztree = railwayInformationSystemService.createZtreeByModule();
-        mv.addObject("zTree", ztree);
+        mv.addObject("existingProject", existingProject);
         mv.setViewName("/cri/existingproject/update");
         // 设置返回的url
         BackUrlUtil.setBackUrl(mv, request);
