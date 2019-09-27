@@ -96,6 +96,8 @@ public class RailwayInformationSystemController {
 		ModelAndView mv = new ModelAndView();
 		RailwayInformationSystem railwayInformationSystem = railwayInformationSystemService.get(id);
 		mv.addObject("systeminfo", railwayInformationSystem);
+		String ztree = riopiService.createZtreeByModule();// 信息系统列表
+		mv.addObject("zTree", ztree);
 		mv.setViewName("/cri/railwayinformationsystem/update");
 		// 设置返回的url
 		BackUrlUtil.setBackUrl(mv, request);

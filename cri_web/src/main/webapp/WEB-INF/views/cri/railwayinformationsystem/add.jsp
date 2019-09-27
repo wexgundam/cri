@@ -64,22 +64,6 @@
 								   value="" maxlength="20"> <label id="ORDER_INDEXTip"></label>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label">创建人ID：</label>
-						<div class="col-md-9">
-							<input id="CREATOR_ID" name="CREATOR_ID" type="text"
-								   class="form-control input-inline  input-xlarge" placeholder=""
-								   value="" maxlength="20"> <label id="CREATOR_IDTip"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label">最后修改人ID：</label>
-						<div class="col-md-9">
-							<input id="LAST_EDITOR_ID" name="LAST_EDITOR_ID" type="text"
-								   class="form-control input-inline  input-xlarge" placeholder=""
-								   value="" maxlength="20"> <label id="LAST_EDITOR_IDTip"></label>
-						</div>
-					</div>
 				</div>
 				<div class="form-actions">
 					<div class="row">
@@ -137,7 +121,6 @@
             jQuery(document).ready(function () {
                 var t = $("#tree");
                 t = $.fn.zTree.init(t, setting, zNodes);
-                var zTree = $.fn.zTree.getZTreeObj("tree");
             });
             $('#systemcontentList').modal('show');
         }

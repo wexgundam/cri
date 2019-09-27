@@ -30,7 +30,7 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
      */
     public int add(RailwayInformationSystem railwayInformationSystem) {
         String sql = "insert into t_railway_information_system(id,name,riopi_id,riopi_name,order_index,creator_id,creator_real_name,created_at,last_editor_id,last_editor_real_name,last_edited_at)"
-                + " values(SEQ_T_RIS.nextval,:name,:RIOPI_ID,:RIOPI_NAME,:ORDER_INDEX,:CREATOR_ID,:CREATOR_REAL_NAME,:CREATED_AT,:LAST_EDITOR_ID,:LAST_EDITOR_REAL_NAME,:LAST_EDITED_AT)";
+                + " values(SEQ_T_RIS.nextval,:name,:RIOPI_ID,:RIOPI_NAME,:ORDER_INDEX,:CREATOR_ID,:CREATOR_REAL_NAME,sysdate,:LAST_EDITOR_ID,:LAST_EDITOR_REAL_NAME,sysdate)";
         return insert(sql, railwayInformationSystem);
     }
 
@@ -85,13 +85,18 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
         return count(sql, objects);
     }
     public List<RailwayInformationSystem> list(RailwayInformationSystemSearchVO railwayInformationSystemSearchVO) {
-        String sql = "select t.id,t.name,t.riopi_id,t.riopi_name,t.order_index,t.creator_id," +
-                "t.creator_real_name,t.created_at," +
-                "t.last_editor_id,t.last_editor_real_name," +
-                "t.last_edited_at from t_railway_information_system t where 1=1 ";
+//        String sql = "select t.id,t.name,t.riopi_id,t.riopi_name,t.order_index,t.creator_id," +
+//                "t.creator_real_name,t.created_at," +
+//                "t.last_editor_id,t.last_editor_real_name," +
+//                "t.last_edited_at from t_railway_information_system t where 1=1 ";
+        String sql = "select t1.id,t1.name,t1.parent_id riopi_id,t1.display_order order_index ,t1.creator_real_name," +
+                "t1.created_at,t1.last_editor_real_name,t1.last_edited_at from t_riopi t1" +
+                " union " +
+                "select t.id,t.name,t.riopi_id,t.order_index,t.creator_real_name,t.created_at," +
+                "t.last_editor_real_name,t.last_edited_at from t_railway_information_system t where 1=1";
         sql += createSearchSql(railwayInformationSystemSearchVO);
         sql += " order by order_index asc ";
-        sql = PageUtil.createOraclePageSQL(sql, railwayInformationSystemSearchVO.getPageIndex());
+   //     sql = PageUtil.createOraclePageSQL(sql, railwayInformationSystemSearchVO.getPageIndex());
         return list(sql, railwayInformationSystemSearchVO);
     }
     /**
@@ -120,9 +125,9 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
     private String createSearchSql(RailwayInformationSystemSearchVO railwayInformationSystemSearchVO) {
         String sql = "";
         if (StringUtil.isNotNullOrEmpty(railwayInformationSystemSearchVO.getName())) {
-            sql += " and name like :name";
+            sql += " and name like :NameStr";
         }else if(StringUtil.isNotNullOrEmpty(railwayInformationSystemSearchVO.getriopiName())){
-            sql += " and riopi_name like :riopiName";
+            sql += " and name like :riopiNameStr";
         }
         return sql;
     }

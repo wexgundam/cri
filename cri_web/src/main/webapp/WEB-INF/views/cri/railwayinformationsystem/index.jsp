@@ -7,9 +7,10 @@
         <link
                 href="${staticServer}/assets/treetable/treeTable.min.css?version=${versionNo}"
                 rel="stylesheet" type="text/css" />
+        <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css"
+              rel="stylesheet" type="text/css" />
     </critc-css>
 </head>
-
 <body>
 <!-- BEGIN PAGE BAR -->
 <div class="page-bar">
@@ -41,11 +42,20 @@
 
                     <td>归属信息化总体规划目录名称：</td>
                     <td>
-                        <form:select path="railwayInformationSystemSearchVO.riopiName" class="form-control input-medium"
+                        <form:select path="railwayInformationSystemSearchVO.riopiName" class="form-control input-medium" onblur="getcode()"
                                      id="listContentId">
                             <form:option value="" label="--全部--"/>
                             <form:options items="${listContent}" itemValue="content" itemLabel="content"/>
                         </form:select></td>
+
+                           <%-- <input type="text" name="riopiName" id="riopiName" value=""
+                                       maxlength="100" placeholder="点击选择总体规划目录" title="总体规划目录"  onclick="showcomboboxTree()"  readonly>
+                                <div id="riopiTreeDiv" style="display:none;background-color: white;position:absolute;z-index:9999;border: 1px solid #DDDDDD">
+                                    <ul id="riopiTree" class="tree"></ul>
+                                </div>
+                            <div class="modal-body">
+                                <ul id="tree" class="ztree" style="width: 560px; overflow: auto;position:absolute;z-index:9999;"></ul>
+                            </div>--%>
                     </td>
                 </tr>
             </table>
@@ -59,10 +69,6 @@
                         <i class=" fa fa-plus bigger-110"></i> 新增
                     </button>
                 </c:if>
-
-                <button class="btn btn-file" id="importUser">
-                    <i class="fa fa-cloud-upload"></i> 导入
-                </button>
                 <button class="btn btn-file" id="outportUser">
                     <i class="fa fa-cloud-download"></i> 导出
                 </button>
@@ -78,38 +84,29 @@
             <thead>
             <tr>
                 <th width=200>铁路信息系统名称</th>
-                <th width=200>归属信息化总体规划目录主键</th>
-                <th width=200>归属信息化总体规划目录名称</th>
                 <th width=80>排序</th>
-                <th width=100>创建人ID</th>
                 <th width=100>创建人实名</th>
-                <th width=100>创建时间</th>
-                <th width="160">最后修改人ID</th>
+                <th width=160>创建时间</th>
                 <th width=100>最后修改人实名</th>
                 <th width=160>最后修改时间</th>
-                <th width="241">操作</th>
+                <th width="160">操作</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${list}" var="systeminfo" varStatus="st">
-                <tr id="${systeminfo.id}">
+                <tr id="${systeminfo.id}"  pId="${systeminfo.RIOPI_ID}">
                     <td>${systeminfo.name}</td>
-                    <td>${systeminfo.RIOPI_ID}</td>
-                    <td>${systeminfo.RIOPI_NAME}</td>
                     <td>${systeminfo.ORDER_INDEX}</td>
-                    <td>${systeminfo.CREATOR_ID}</td>
                     <td>${systeminfo.CREATOR_REAL_NAME}</td>
                     <td>${systeminfo.CREATED_AT}</td>
-                    <td>${systeminfo.LAST_EDITOR_ID}</td>
                     <td>${systeminfo.LAST_EDITOR_REAL_NAME}</td>
                     <td>${systeminfo.LAST_EDITED_AT}</td>
-
                     <td>
                         <a href="toUpdate.htm?id=${systeminfo.id}&backUrl=${backUrl}">
                             修改</i>
                         </a>
                         <a href="javascript:delModule(${systeminfo.id });"> 删除 </a>
-                  </td>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -121,15 +118,23 @@
 </div>
 
 </body>
-<critc-script> <script
-        src="${staticServer }/assets/treetable/jquery.treeTable.min.js"
-        type="text/javascript"></script> <script type="text/javascript">
-    var selDepartmentId = 0;//定义选择的selDepartmentId
+<critc-script>
+    <script src="${staticServer }/assets/treetable/jquery.treeTable.min.js"
+    type="text/javascript"></script>
+    <script src="${staticServer}/assets/cropper3.0/cropper.min.js"></script>
+    <script src="${staticServer}/assets/cropper3.0/main.js"></script>
+    <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var selDepartmentId = 0;//定义选择的selDepartmentId
+
     $(function () {
         $("#btnSearch").bind('click', searchModule);
         $("#btnAdd").bind('click', addSystemInfo);
-        $("#importUser").bind('click', importUser);
         $("#outportUser").bind('click', outportUser);
+        $("#treeTable").treeTable({
+            expandLevel: 1
+        });
     })
 
     // 查询方法
@@ -165,6 +170,37 @@
     }
     //导出
     var outportUser = function () {
+
+    }
+
+    function showcomboboxTree() {
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: ""
+                }
+            }
+        };
+        <%--var zNodes = [${listContent}]--%>
+        jQuery(document).ready(function () {
+            var t = $("#tree");
+            t = $.fn.zTree.init(t, setting, zNodes);
+        });
+        $('#systemcontentList').modal('show');
+    }
+
+    function getSelected() {
+        var treeObj = $.fn.zTree.getZTreeObj("tree");
+        var nodes = treeObj.getSelectedNodes();
+        if (nodes.length > 0) {
+            $("#RIOPI_ID").val(nodes[0].id);
+            $("#RIOPI_NAME").val(nodes[0].name);
+            $('#systemcontentList').modal('hide');
+        }
+        else return;
 
     }
 </script> </critc-script>

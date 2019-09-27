@@ -114,7 +114,7 @@ public class RailwayInformationSystemService {
      *
      * @return Ztree
      *
-     * @author 李红 created on 2017年10月30日
+     * @author rs  created on 2017年10月30日
      */
     public String createZtreeByModule() {
         // 信息化名称列表
