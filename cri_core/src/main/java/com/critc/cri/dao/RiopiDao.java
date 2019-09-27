@@ -6,6 +6,7 @@ import com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.page.PageUtil;
 import com.critc.util.string.StringUtil;
 import org.springframework.stereotype.Repository;
+import com.critc.util.model.ComboboxVO;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
                 "from t_riopi t where 1=1 ";
         sql += createSearchSql(riopiSearchVO);
         sql += " order by id asc";
-      //  sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
+        sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
         return list(sql,riopiSearchVO);
     }
 //
@@ -183,18 +184,30 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
 //        }
         return sql;
     }
-    /**
-     *
-     * what: 获取所有目录
-     *
-     * @return list
-     *
-     * @author lxy created on 2019年9月4日
-     */
+    public int count(RiopiSearchVO riopiSearchVO) {
+        String sql = "select count(*) from  t_riopi where 1=1 ";
+        sql += createSearchSql(riopiSearchVO);
+        return count(sql, riopiSearchVO);
+    }
+    public List<ComboboxVO> listCombo() {
+        String sql = "select t.id value,t.name content from t_riopi t where 1=1 order by id ";
+        return listCombobox(sql);
+    }
     public List<Riopi> list() {
-        String sql = "select t.id,t.name,t.parent_id,(select count(*) from t_riopi where parent_id=t.id) cnt," +
-                "(select name from t_riopi where id=t.parent_id)parentName " +
-                "from t_riopi t order by parent_id, display_order";
+        String sql = "select t.id," +
+                "t.name," +
+                "t.parent_id," +
+                "t.bm_department_id," +
+                "t.bm_department_name," +
+                "t.display_order," +
+                "t.note," +
+                "t.creator_id," +
+                "t.creator_real_name," +
+                "t.created_at," +
+                "t.last_editor_id," +
+                "t.last_editor_real_name," +
+                "t.last_edited_at " +
+                "from t_riopi t where 1=1 ";
         return list(sql);
     }
 }

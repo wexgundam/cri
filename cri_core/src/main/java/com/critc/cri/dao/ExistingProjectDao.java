@@ -3,6 +3,7 @@ package com.critc.cri.dao;
 import com.critc.core.dao.BaseDao;
 import com.critc.cri.model.ExistingProject;
 import com.critc.cri.vo.ExistingProjectSearchVO;
+import com.critc.sys.model.SysDepartment;
 import com.critc.sys.model.SysRole;
 import com.critc.sys.vo.SysRoleSearchVO;
 import com.critc.util.page.PageUtil;
@@ -111,28 +112,16 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
      * @Description : 
      * @author 卢薪竹 created by 8:51 2019/8/28
     */
+
+
     public ExistingProject get(int id) {
-        String sql = "select t.id," +
-                "t.ris_id, " +
-                "t.ris_name, "+
-                "t.name," +
-                "t.project_type_code," +
-                "t.project_type_name," +
-                "t.project_progress_code," +
-                "t.project_progress_name," +
-                "t.review_passed_dar," +
-                "t.review_passed_cpc," +
-                "t.review_passed_tts," +
-                "t.review_passed_fsr," +
-                "t.construction_department_id," +
-                "t.construction_department_name," +
-                "t.order_index," +
-                "t.creator_id," +
-                "t.creator_real_name," +
-                "t.created_at," +
-                "t.last_editor_id," +
-                "t.last_editor_real_name," +
-                "t.last_edited_at from t_existing_project t where id=?";
+        String sql = "select t.id,t.name,t.ris_id,t.ris_name,t.project_type_code, " +
+                "(select name from t_sys_dic where category='PROJECT_TYPE' and code = project_type_code) project_type_name, " +
+                "t.project_progress_code, " +
+                "(select name from t_sys_dic where category='PROJECT_PROGRESS' and code = project_progress_code) project_progress_name, " +
+                "t.review_passed_dar,t.review_passed_cpc,t.review_passed_tts,t.review_passed_fsr,t.construction_department_id,t.construction_department_name, " +
+                "t.order_index,t.creator_id,t.creator_real_name,t.created_at,t.last_editor_id,t.last_editor_real_name,t.last_edited_at from t_existing_project t " +
+                "where id=?";
         return get(sql, id);
     }
     /**
@@ -143,16 +132,11 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
      * @author 卢薪竹 created by 8:52 2019/8/28
     */
     public List<ExistingProject> list(ExistingProjectSearchVO existingProjectSearchVO) {
-        String sql = "select t.id," +
-                "t.name," +
-                "t.ris_name," +
-                "t.project_type_name,"+
-                "t.project_progress_name,"+
-                "t.review_passed_cpc,"+
-                "t.construction_department_name," +
-                "t.creator_real_name,"+
-                "t.last_editor_real_name," +
-                "t.last_edited_at from t_existing_project t where 1=1";
+        String sql ="select t.id,t.name,t.ris_name," +
+                "(select name from t_sys_dic where category='PROJECT_TYPE' and code = project_type_code) project_type_name,"+
+                "(select name from t_sys_dic where category='PROJECT_PROGRESS' and code = project_progress_code) project_progress_name," +
+                "t.review_passed_cpc,t.construction_department_name,t.creator_real_name,t.last_editor_real_name,t.last_edited_at from t_existing_project t where 1=1";
+
         sql += createSearchSql(existingProjectSearchVO);
         //sql += " order by display_order asc ";
         sql = PageUtil.createOraclePageSQL(sql, existingProjectSearchVO.getPageIndex());

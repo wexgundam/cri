@@ -10,6 +10,11 @@
 <head>
     <title>既有信息化项目添加</title>
 </head>
+<critc-css>
+    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/cropper.min.css"/>
+    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/main.css"/>
+    <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css" rel="stylesheet" type="text/css"/>
+</critc-css>
 <body>
 <div class="row">
     <div class="col-md-10">
@@ -31,7 +36,7 @@
                     <label class="col-md-3 control-label">归属信息化总体规划目录名称：</label>
                     <div class="col-md-9">
                         <div class="input-group input-medium">
-                            <input type="text" id="risId" name="risId"
+                            <input type="hidden" id="risId" name="risId"
                                    class="form-control" value="${existingProject.risId}"/>
                             <input type="text" id="risName" name="risName"
                                    readonly="readonly"
@@ -47,48 +52,77 @@
                         <label id="departmentNameTip"></label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">项目类型编码：</label>
-                    <div class="col-md-10">
-                        <input id="projectTypeCode" name="projectTypeCode" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.projectTypeCode}" maxlength="20"> <label id="projectTypeCodeTip"></label>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目类型编码：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="projectTypeCode" name="projectTypeCode" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="${existingProject.projectTypeCode}" maxlength="20"> <label id="projectTypeCodeTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目类型：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<form:select path="existingProject.projectTypeName"--%>
+                                     <%--class="form-control input-inline  input-xlarge" name="projectTypeName"--%>
+                                     <%--id="type">--%>
+                            <%--<option value="">请选择项目类型</option>--%>
+                            <%--<form:options items="${listProjectType}" itemValue="name"--%>
+                                          <%--itemLabel="name" />--%>
+                        <%--</form:select>--%>
+                        <%--<label id="typeTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目类型：</label>
                     <div class="col-md-10">
-                        <form:select path="existingProject.projectTypeName"
-                                     class="form-control input-inline  input-xlarge" name="projectTypeName"
+                        <form:select path="existingProject.projectTypeCode"
+                                     class="form-control input-inline  input-xlarge" name="projectTypeCode"
                                      id="type">
                             <option value="">请选择项目类型</option>
-                            <form:options items="${listProjectType}" itemValue="name"
-                                          itemLabel="name" />
+                            <form:options items="${listProjectType}" itemValue="code"
+                                          itemLabel="name"  data="${listProjectType}"/>
                         </form:select>
-                        <label id="typeTip"></label>
+                        <label id="projectTypeCodeTip"></label>
                     </div>
                 </div>
+
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目进度编码：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="projectProgressCode" name="projectProgressCode" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="${existingProject.projectProgressCode}" maxlength="20"> <label id="projectProgressCodeTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">项目进度名称：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<form:select path="existingProject.projectProgressName"--%>
+                                     <%--class="form-control input-inline  input-xlarge" name="projectProgressName"--%>
+                                     <%--id="type">--%>
+                            <%--<option value="">请选择项目进度</option>--%>
+                            <%--<form:options items="${listProjectProgress}" itemValue="name"--%>
+                                          <%--itemLabel="name" />--%>
+                        <%--</form:select>--%>
+                        <%--<label id="typeTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目进度编码：</label>
+                    <label class="col-md-2 control-label">项目进度：</label>
                     <div class="col-md-10">
-                        <input id="projectProgressCode" name="projectProgressCode" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.projectProgressCode}" maxlength="20"> <label id="projectProgressCodeTip"></label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">项目进度名称：</label>
-                    <div class="col-md-10">
-                        <form:select path="existingProject.projectProgressName"
-                                     class="form-control input-inline  input-xlarge" name="projectProgressName"
+                        <form:select path="existingProject.projectProgressCode"
+                                     class="form-control input-inline  input-xlarge" name="projectProgressCode"
                                      id="type">
                             <option value="">请选择项目进度</option>
-                            <form:options items="${listProjectProgress}" itemValue="name"
+                            <form:options items="${listProjectProgress}" itemValue="code"
                                           itemLabel="name" />
                         </form:select>
-                        <label id="typeTip"></label>
                     </div>
+                    <label id="projectProgressNameTip"></label>
                 </div>
+
+
                 <div class="form-group">
                     <label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
                     <div class="col-md-10">
@@ -103,37 +137,41 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">建设单位ID：</label>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">建设单位ID：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="constructionDepartmentId" name="constructionDepartmentId" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="${existingProject.constructionDepartmentId}" maxlength="20"> <label id="constructionDepartmentIdTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-2 control-label">建设单位名称：</label>--%>
+                    <%--<div class="col-md-10">--%>
+                        <%--<input id="constructionDepartmentName" name="constructionDepartmentName" type="text" class="form-control input-inline  input-xlarge"--%>
+                               <%--placeholder=""--%>
+                               <%--value="${existingProject.constructionDepartmentName}" maxlength="20"> <label id="constructionDepartmentNameTip"></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <div class="form-group" id="constructionDepartmentList">
+                    <label class="col-md-2 control-label">建设单位：</label>
                     <div class="col-md-10">
-                        <input id="constructionDepartmentId" name="constructionDepartmentId" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.constructionDepartmentId}" maxlength="20"> <label id="constructionDepartmentIdTip"></label>
+                        <div class="input-group input-medium">
+                            <input type="hidden" id="constructionDepartmentId" name="constructionDepartmentId"
+                                   class="form-control input-inline input-xlarge" value="${sysUser.departmentId}"/>
+                            <input type="text" id="constructionDepartmentName" name="constructionDepartmentName"
+                                   readonly="readonly"
+                                   class="form-control input-inline input-xlarge"
+                                   placeholder="" value="${sysUser.departmentName}"/>
+                            <span class="input-group-btn">
+                                       <button class="btn btn-primary" id="choiceConstructionDepartment"
+                                               onclick="javascript:getZtreeConstructionDepartment()"
+                                               type="button"><i class="fa fa-search"/></i>选择
+                                       </button>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">建设单位名称：</label>
-                    <div class="col-md-10">
-                        <input id="constructionDepartmentName" name="constructionDepartmentName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.constructionDepartmentName}" maxlength="20"> <label id="constructionDepartmentNameTip"></label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">创建人ID：</label>
-                    <div class="col-md-10">
-                        <input id="creatorIndex" name="creatorIndex" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.creatorId}" maxlength="20"> <label id="creatorIndexTip"></label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">创建人实名：</label>
-                    <div class="col-md-10">
-                        <input id="creatorRealName" name="creatorRealName" type="text" class="form-control input-inline  input-xlarge"
-                               placeholder=""
-                               value="${existingProject.creatorRealName}" maxlength="20"> <label id="creatorRealNameTip"></label>
-                    </div>
+                    <label id="constructionDepartmentTip"></label>
                 </div>
             </div>
             <div class="form-actions">
@@ -149,7 +187,7 @@
         </form>
     </div>
 </div>
-<div class="modal fade" id="systemcontentList" tabindex="-1" role="basic" aria-hidden="true">
+<div class="modal fade" id="risList" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,10 +195,27 @@
                 <h4 class="modal-title">选择归属既有信息系统</h4>
             </div>
             <div class="modal-body">
-                <ul id="tree" class="ztree" style="width: 560px; overflow: auto;"></ul>
+                <ul id="treeRis" class="ztree" style="width: 560px; overflow: auto;"></ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="javascript:getSelected();">确认</button>
+                <button type="button" class="btn btn-primary" onclick="javascript:getSelectedRis();">确认</button>
+                <button type="button" class="btn " data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="constDepartmentList" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">选择建设单位</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="treeConstructionDepartment" class="ztree" style="width: 560px; overflow: auto;"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="javascript:getSelectedConstructionDepartment();">确认</button>
                 <button type="button" class="btn " data-dismiss="modal">取消</button>
             </div>
         </div>
@@ -175,7 +230,7 @@
     <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        function getZtree() {
+        function getZtreeRis(){
             var setting = {
                 data: {
                     simpleData: {
@@ -186,42 +241,53 @@
                     }
                 }
             };
-            var zNodes = [${zTree}]
+            var zNodes = [${ztreeRis}];
             jQuery(document).ready(function () {
-                var t = $("#tree");
+                var t = $("#treeRis");
                 t = $.fn.zTree.init(t, setting, zNodes);
-                var zTree = $.fn.zTree.getZTreeObj("tree");
+                var zTree = $.fn.zTree.getZTreeObj("treeRis");
             });
-            $('#systemcontentList').modal('show');
+            $('#risList').modal('show');
         }
-        function getSelected() {
-            var treeObj = $.fn.zTree.getZTreeObj("tree");
+        function getZtreeConstructionDepartment(){
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: ""
+                    }
+                }
+            };
+            var zNodes = [${ztreeConstructionDepartment}];
+            jQuery(document).ready(function () {
+                var t = $("#treeConstructionDepartment");
+                t = $.fn.zTree.init(t, setting, zNodes);
+                var zTree = $.fn.zTree.getZTreeObj("treeConstructionDepartment");
+            });
+            $('#constDepartmentList').modal('show');
+        }
+
+        function getSelectedRis() {
+            var treeObj = $.fn.zTree.getZTreeObj("treeRis");
             var nodes = treeObj.getSelectedNodes();
             if (nodes.length > 0) {
                 $("#risId").val(nodes[0].id);
                 $("#risName").val(nodes[0].name);
-                $('#systemcontentList').modal('hide');
+                $('#risList').modal('hide');
             }
             else return;
         }
-        function showSelTree() {
-            $.ajax({
-                type: 'GET',
-                url: 'systemContentTree.htm',
-                contentType : "text/plain; charset=UTF-8",
-                dataType: 'json',
-                success: function (result) {
-                    if (result["success"]) {
-                        ztree = result.ztree;
-                        getZtree(ztree);
-                        $('#systemcontentList').modal('show');
-                    }
-                },
-                fail:function (result) {
-                    console.log(result);
-                }
-
-            });
+        function getSelectedConstructionDepartment() {
+            var treeObj = $.fn.zTree.getZTreeObj("treeConstructionDepartment");
+            var nodes = treeObj.getSelectedNodes();
+            if (nodes.length > 0) {
+                $("#constructionDepartmentId").val(nodes[0].id);
+                $("#constructionDepartmentName").val(nodes[0].name);
+                $('#constDepartmentList').modal('hide');
+            }
+            else return;
         }
     </script>
 </critc-script>

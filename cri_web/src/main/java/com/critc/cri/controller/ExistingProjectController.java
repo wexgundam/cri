@@ -1,8 +1,3 @@
-/**
- * Copyright 2017 弘远技术研发中心. All rights reserved
- * Project Name:cdpf_v1
- * Module Name:web
- */
 package com.critc.cri.controller;
 
 import com.critc.core.pub.PubConfig;
@@ -11,6 +6,7 @@ import com.critc.cri.service.ExistingProjectService;
 import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 
+import com.critc.sys.service.SysDepartmentService;
 import com.critc.sys.service.SysDicService;
 
 import com.critc.util.code.GlobalCode;
@@ -38,10 +34,11 @@ public class ExistingProjectController{
      */
     @Autowired
     private PubConfig pubConfig;
-
     /**
-     * 资源Service
+     * 部门下拉菜单
      */
+    @Autowired
+    private SysDepartmentService sysDepartmentService;
     /**
      * 信息系统Service
      */
@@ -74,6 +71,9 @@ public class ExistingProjectController{
         // 设置分页的变量
         mv.addObject("pageNavigate", pageNavigate);
         mv.addObject("list", list);
+        mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+        mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+        mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         // 设置返回url
         BackUrlUtil.createBackUrl(mv, request, url);
         return mv;
@@ -109,10 +109,15 @@ public class ExistingProjectController{
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         mv.setViewName("/cri/existingproject/add");
-
+        //获取戎珊列表
+        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
+        //获取建设单位zTree
+        String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
+        mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
         // 设置返回的url：方法1
-//        BackUrlUtil.setBackUrl(mv, request);
-//        return mv;
+        //  BackUrlUtil.setBackUrl(mv, request);
+        //  return mv;
         // 设置返回的url：方法2
         mv.addObject("existingProject",existingProject);
         BackUrlUtil.setBackUrl(mv, request);
@@ -134,11 +139,14 @@ public class ExistingProjectController{
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        mv.addObject("existingProject", existingProject);
+        //获取戎珊列表
+        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
+        //获取建设单位zTree
+        String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
+        mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
 
-        //获取其他表结构
-        String ztree = railwayInformationSystemService.createZtreeByModule();
-        mv.addObject("zTree", ztree);
+        mv.addObject("existingProject", existingProject);
         mv.setViewName("/cri/existingproject/update");
         // 设置返回的url
         BackUrlUtil.setBackUrl(mv, request);

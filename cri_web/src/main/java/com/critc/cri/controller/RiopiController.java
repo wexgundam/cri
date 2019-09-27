@@ -10,6 +10,7 @@ import  com.critc.cri.service.RiopiService;
 import  com.critc.cri.model.Riopi;
 import  com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.code.GlobalCode;
+import com.critc.util.page.PageNavigate;
 import com.critc.util.session.SessionUtil;
 import com.critc.util.string.BackUrlUtil;
 import com.critc.util.string.StringUtil;
@@ -50,19 +51,21 @@ public class RiopiController {
      * @param
      * @return 到角色首页
      *
-     * @author 孔垂云 created on 2017年11月6日
+     * @author
      */
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response, RiopiSearchVO  riopiSearchVO) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/cri/Riopi/index");
-        // 获取查询总数
-     //   int recordCount = riopiService.count();
-        List<Riopi> list = riopiService.list(riopiSearchVO);
-        // 设置分页的变量
-     //   mv.addObject("pageNavigate", pageNavigate);
-        mv.addObject("list", list);
         String url = pubConfig.getDynamicServer() + "/cri/Riopi/index.htm?";
+        // 获取查询总数
+        int recordCount = riopiService.count(riopiSearchVO);
+        List<Riopi> list = riopiService.list(riopiSearchVO);
+        // 定义分页对象
+        PageNavigate pageNavigate = new PageNavigate(url, riopiSearchVO.getPageIndex(), recordCount);
+        // 设置分页的变量
+        mv.addObject("pageNavigate", pageNavigate);
+        mv.addObject("list", list);
         mv.addObject("backUrl", StringUtil.encodeUrl(url));
         return mv;
     }
@@ -87,7 +90,7 @@ public class RiopiController {
      * @param id 部门id
      * @return 到修改部门页面
      *
-     * @author 李红 created on 2017年10月30日
+     * @author
      */
     @RequestMapping("/toUpdate")
     public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
@@ -146,7 +149,7 @@ public class RiopiController {
             int flag = riopiService.update(riopi);
            if (flag == 0) {
                // 部门修改失败
-                return "forward:/error.htm?resultCode=" + GlobalCode.OPERA_FAILURE;
+               return "forward:/error.htm?resultCode=" + GlobalCode.OPERA_FAILURE;
             }
             else if (flag == 2) {
                 // 存在相同的部门名称，不能修改

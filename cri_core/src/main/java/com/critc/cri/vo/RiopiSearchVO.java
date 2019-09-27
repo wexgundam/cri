@@ -44,7 +44,7 @@ public class RiopiSearchVO extends PageSearchVO {
 
     @Override
     public String toString() {
-        return "SysRoleSearchVO{"
+        return "RiopiSearchVO{"
                 + "isBuildin=" + isBuildin
                 + "name='" + name + '\''
                 + '}';
