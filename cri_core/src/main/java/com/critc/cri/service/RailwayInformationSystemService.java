@@ -127,4 +127,10 @@ public class RailwayInformationSystemService {
         }
         return StringUtil.subTract(sb.toString());
     }
+
+    public List<RailwayInformationSystem> getIdByriopiname(String riopiname) {
+
+        return railwayInformationSystemDao.getIdByriopiname(riopiname);
+    }
+
 }
