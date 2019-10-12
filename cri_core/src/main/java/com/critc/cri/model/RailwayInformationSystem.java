@@ -23,6 +23,57 @@ public class RailwayInformationSystem {
     private String RIOPI_NAME;
 
     /**
+     *项目类型编码，来源系统字典“项目类型”
+     */
+
+    private String PROJECT_TYPE_CODE;
+
+    /**
+     *项目类型名称，来源系统字典“项目类型”
+     */
+    private  String PROJECT_TYPE_NAME;
+
+    /**
+     *项目进度编码，来源系统字典“项目进度
+     */
+    private  String PROJECT_PROGRESS_CODE;
+
+    /**
+     *项目进度名称，来源系统字典“项目进度”
+     */
+    private  String PROJECT_PROGRESS_NAME;
+
+    /**
+     *通过评审的需求分析报告
+     */
+    private  String  REVIEW_PASSED_DAR;
+
+    /**
+     *通过评审的网络安全等级定级
+     */
+    private String REVIEW_PASSED_CPC;
+
+    /**
+     *通过评审的总体技术方案
+     */
+    private String REVIEW_PASSED_TTS;
+
+    /**
+     *通过评审的可行性研究报告
+     */
+    private  String REVIEW_PASSED_FSR;
+
+    /**
+     *建设单位Id
+     */
+    private String CONSTRUCTION_DEPARTMENT_ID;
+
+    /**
+     *建设单位名称
+     */
+    private  String  CONSTRUCTION_DEPARTMENT_NAME;
+
+    /**
      *
      */
     private Integer ORDER_INDEX;
@@ -157,5 +208,86 @@ public class RailwayInformationSystem {
 
     public void setLAST_EDITED_AT(String LAST_EDITED_AT) {
         this.LAST_EDITED_AT = LAST_EDITED_AT;
+    }
+
+
+    public String getPROJECT_TYPE_CODE() {
+        return PROJECT_TYPE_CODE;
+    }
+
+    public void setPROJECT_TYPE_CODE(String PROJECT_TYPE_CODE) {
+        this.PROJECT_TYPE_CODE = PROJECT_TYPE_CODE;
+    }
+
+    public String getPROJECT_TYPE_NAME() {
+        return PROJECT_TYPE_NAME;
+    }
+
+    public void setPROJECT_TYPE_NAME(String PROJECT_TYPE_NAME) {
+        this.PROJECT_TYPE_NAME = PROJECT_TYPE_NAME;
+    }
+
+    public String getPROJECT_PROGRESS_CODE() {
+        return PROJECT_PROGRESS_CODE;
+    }
+
+    public void setPROJECT_PROGRESS_CODE(String PROJECT_PROGRESS_CODE) {
+        this.PROJECT_PROGRESS_CODE = PROJECT_PROGRESS_CODE;
+    }
+
+    public String getPROJECT_PROGRESS_NAME() {
+        return PROJECT_PROGRESS_NAME;
+    }
+
+    public void setPROJECT_PROGRESS_NAME(String PROJECT_PROGRESS_NAME) {
+        this.PROJECT_PROGRESS_NAME = PROJECT_PROGRESS_NAME;
+    }
+
+    public String getREVIEW_PASSED_DAR() {
+        return REVIEW_PASSED_DAR;
+    }
+
+    public void setREVIEW_PASSED_DAR(String REVIEW_PASSED_DAR) {
+        this.REVIEW_PASSED_DAR = REVIEW_PASSED_DAR;
+    }
+
+    public String getREVIEW_PASSED_CPC() {
+        return REVIEW_PASSED_CPC;
+    }
+
+    public void setREVIEW_PASSED_CPC(String REVIEW_PASSED_CPC) {
+        this.REVIEW_PASSED_CPC = REVIEW_PASSED_CPC;
+    }
+
+    public String getREVIEW_PASSED_TTS() {
+        return REVIEW_PASSED_TTS;
+    }
+
+    public void setREVIEW_PASSED_TTS(String REVIEW_PASSED_TTS) {
+        this.REVIEW_PASSED_TTS = REVIEW_PASSED_TTS;
+    }
+
+    public String getREVIEW_PASSED_FSR() {
+        return REVIEW_PASSED_FSR;
+    }
+
+    public void setREVIEW_PASSED_FSR(String REVIEW_PASSED_FSR) {
+        this.REVIEW_PASSED_FSR = REVIEW_PASSED_FSR;
+    }
+
+    public String getCONSTRUCTION_DEPARTMENT_ID() {
+        return CONSTRUCTION_DEPARTMENT_ID;
+    }
+
+    public void setCONSTRUCTION_DEPARTMENT_ID(String CONSTRUCTION_DEPARTMENT_ID) {
+        this.CONSTRUCTION_DEPARTMENT_ID = CONSTRUCTION_DEPARTMENT_ID;
+    }
+
+    public String getCONSTRUCTION_DEPARTMENT_NAME() {
+        return CONSTRUCTION_DEPARTMENT_NAME;
+    }
+
+    public void setCONSTRUCTION_DEPARTMENT_NAME(String CONSTRUCTION_DEPARTMENT_NAME) {
+        this.CONSTRUCTION_DEPARTMENT_NAME = CONSTRUCTION_DEPARTMENT_NAME;
     }
 }
