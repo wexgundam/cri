@@ -3,6 +3,7 @@ package com.critc.cri.dao;
 import com.critc.core.dao.BaseDao;
 import com.critc.cri.model.Riopi;
 import com.critc.cri.vo.RiopiSearchVO;
+import com.critc.util.model.ComboboxVO;
 import com.critc.util.page.PageUtil;
 import com.critc.util.string.StringUtil;
 import org.springframework.stereotype.Repository;
@@ -189,10 +190,26 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
         sql += createSearchSql(riopiSearchVO);
         return count(sql, riopiSearchVO);
     }
+    /**
+     *
+     * what: 角色下拉框
+     *
+     * @return list
+     *
+     * @author lxy created on 2017年11月8日
+     */
     public List<ComboboxVO> listCombo() {
         String sql = "select t.id value,t.name content from t_riopi t where 1=1 order by id ";
         return listCombobox(sql);
     }
+    /**
+     *
+     * what: 获取所有目录
+     *
+     * @return list
+     *
+     * @author lxy created on 2019年9月4日
+     */
     public List<Riopi> list() {
         String sql = "select t.id," +
                 "t.name," +

@@ -32,7 +32,12 @@ public class RiopiService  extends PageSearchVO{
         List<Riopi> list = riopiDao.list(riopiSearchVO);
         return list;
     }
-    /** l
+    public List<Riopi> list() {
+        // 获取所有部门
+        List<Riopi> list = riopiDao.list();
+        return list;
+    }
+    /**
      *
      * what: 新增
      *

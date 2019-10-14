@@ -168,6 +168,8 @@ public class RailwayInformationSystemController {
 	@RequestMapping("/add")
 	public String add(HttpServletRequest request, HttpServletResponse response, @Valid RailwayInformationSystem railwayInformationSystem) {
 
+	//	List<RailwayInformationSystem>  riopilist = railwayInformationSystemService.getIdByriopiname(String.valueOf(railwayInformationSystem.getRIOPI_NAME()));// 信息系统列表
+      //  int riopiid = riopilist.get(0).getId();
 		int flag = railwayInformationSystemService.add(railwayInformationSystem);
 		if (flag == 0) {
 			// msg=" + StringUtil.encodeUrl("系统新增失败");

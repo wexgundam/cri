@@ -40,10 +40,12 @@
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">归属信息化总体规划目录名称：</label>
-							<div class="col-md-6">
-								<div class="input-group input-medium">
+							<div class="col-md-9">
+								<div class="input-group input-xlarge">
+									<input type="hidden" id="RIOPI_ID" name="RIOPI_ID"
+										   class="form-control" value="${systeminfo.RIOPI_ID}"/>
 								<input id="RIOPI_NAME" name="RIOPI_NAME" type="text" readonly="readonly"
-									   class="form-control input-inline  input-xlarge" placeholder=""
+									   class="form-control" placeholder=""
 									   value="${systeminfo.RIOPI_NAME }" maxlength="20">
 								<span class="input-group-btn">
 												<button class="btn btn-primary" id="choice"
@@ -51,7 +53,7 @@
 														type="button"><i class="fa fa-search"/></i>选择
 											</button>
 										   </span>
-							</div>
+							    </div>
 						</div>
 					</div>
 					<div class="form-group">

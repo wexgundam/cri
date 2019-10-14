@@ -8,13 +8,14 @@ import com.critc.util.page.PageSearchVO;
 /**
  *  字典信息查询条件
  * 
- * @author: 刘正荣
- * @date: 2017年10月19日
+ * @author: rs
+ * @date: 2019年9月30日
  */
 public class RailwayInformationSystemSearchVO extends PageSearchVO {
 
 	private String name;              //系统名称
 	private String riopiName;       //归属信息化目录名称
+	private Integer riopiId;  //归属信息化目录主键
 	
 	public String getName() {
 		return name;
@@ -28,6 +29,13 @@ public class RailwayInformationSystemSearchVO extends PageSearchVO {
 	public void setriopiName(String riopiName) {
 		this.riopiName = riopiName;
 	}
+	public Integer getriopiId() {
+		return riopiId;
+	}
+	public void setriopiId(Integer riopiId) {
+		this.riopiId = riopiId;
+	}
+
 
 	
 	
