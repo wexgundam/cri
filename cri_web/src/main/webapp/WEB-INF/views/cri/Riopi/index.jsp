@@ -3,8 +3,12 @@
 
 <head>
     <title>铁路信息化总体规划目录</title>
+    <critc-css>
+        <link
+                href="${staticServer}/assets/treetable/treeTable.min.css?version=${versionNo}"
+                rel="stylesheet" type="text/css" />
+    </critc-css>
 </head>
-
 <body>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -57,10 +61,6 @@
                         <i class=" fa fa-plus bigger-110"></i> 新增
                     </button>
                 </c:if>
-
-                <button class="btn btn-file" id="importUser">
-                    <i class="fa fa-cloud-upload"></i> 导入
-                </button>
                 <button class="btn btn-file" id="outportUser">
                     <i class="fa fa-cloud-download"></i> 导出
                 </button>
@@ -85,7 +85,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${list }" var="riopi" varStatus="st">
+            <c:forEach items="${list}" var="riopi" varStatus="st">
                 <tr id="${riopi.id}" pId="${riopi.parentId}">
                     <td>${riopi.name}</td>
                     <td>${riopi.parentId}</td>
@@ -106,16 +106,23 @@
         </table>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">${ pageNavigate.pageModel}</div>
-</div>
+<%--<div class="row">--%>
+    <%--<div class="col-md-12">${ pageNavigate.pageModel}</div>--%>
+<%--</div>--%>
 
 </body>
 <critc-script>
+    <script src="${staticServer }/assets/treetable/jquery.treeTable.min.js"
+            type="text/javascript"></script>
+    <script src="${staticServer}/assets/cropper3.0/cropper.min.js"></script>
+    <script src="${staticServer}/assets/cropper3.0/main.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#btnSearch").bind('click', searchRole);
             $("#btnAdd").bind('click', addRole);
+            $("#treeTable").treeTable({
+                expandLevel: 1
+            });
         })
 
         // 查询方法

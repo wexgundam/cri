@@ -32,7 +32,7 @@ public class RiopiService  extends PageSearchVO{
         List<Riopi> list = riopiDao.list(riopiSearchVO);
         return list;
     }
-    /**
+    /** l
      *
      * what: 新增
      *

@@ -51,8 +51,8 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
                 "t.last_edited_at " +
                 "from t_riopi t where 1=1 ";
         sql += createSearchSql(riopiSearchVO);
-        sql += " order by id asc";
-        sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
+        sql += " order by to_char(display_order) asc";
+      //  sql = PageUtil.createOraclePageSQL(sql, riopiSearchVO.getPageIndex());
         return list(sql,riopiSearchVO);
     }
 //
@@ -171,7 +171,7 @@ public class RiopiDao extends BaseDao<Riopi, RiopiSearchVO> {
     private String createSearchSql(RiopiSearchVO riopiSearchVO) {
         String sql = "";
         if (StringUtil.isNotNullOrEmpty(riopiSearchVO.getName())) {
-            sql += " and name like :name";
+            sql += " and name like :NameStr";
         }
 //        if (StringUtil.isNotNullOrEmpty(riopiSearchVO.getVersion())) {
 //            sql += " and version like :versionStr";
