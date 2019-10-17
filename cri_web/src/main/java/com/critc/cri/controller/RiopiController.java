@@ -64,13 +64,13 @@ public class RiopiController {
         // 定义分页对象
         PageNavigate pageNavigate = new PageNavigate(url, riopiSearchVO.getPageIndex(), recordCount);
         // 设置分页的变量
-        mv.addObject("pageNavigate", pageNavigate);
+        mv.addObject(" ", pageNavigate);
         mv.addObject("list", list);
         mv.addObject("backUrl", StringUtil.encodeUrl(url));
         return mv;
     }
     @RequestMapping("/toAdd")
-    public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse   response) {
         ModelAndView mv = new ModelAndView();
         // 部门列表
         mv.setViewName("/cri/Riopi/add");
