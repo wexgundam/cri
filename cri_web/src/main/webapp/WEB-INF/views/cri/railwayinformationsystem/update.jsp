@@ -65,6 +65,65 @@
 							<label id="ORDER_INDEXTip"></label>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">项目类型：</label>
+						<div class="col-md-10">
+							<form:select path="systeminfo.projectTypeCode"
+										 class="form-control input-inline  input-xlarge" name="projectTypeCode"
+										 id="type">
+								<option value="">请选择项目类型</option>
+								<form:options items="${listProjectType}" itemValue="code"
+											  itemLabel="name"  data="${listProjectType}"/>
+							</form:select>
+							<label id="projectTypeCodeTip"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">项目进度：</label>
+						<div class="col-md-10">
+							<form:select path="systeminfo.projectProgressCode"
+										 class="form-control input-inline  input-xlarge" name="projectProgressCode"
+										 id="type">
+								<option value="">请选择项目进度</option>
+								<form:options items="${listProjectProgress}" itemValue="code"
+											  itemLabel="name" />
+							</form:select>
+						</div>
+						<label id="projectProgressNameTip"></label>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
+						<div class="col-md-10">
+							<form:select path="systeminfo.reviewPassedCpc"
+										 class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
+										 id="type">
+								<option value="">请确定网络安全等级</option>
+								<form:options items="${listNetworkSecurity}" itemValue="name"
+											  itemLabel="name" />
+							</form:select>
+							<label id="typeTip"></label>
+						</div>
+					</div>
+					<div class="form-group" id="constructionDepartmentList">
+						<label class="col-md-2 control-label">建设单位：</label>
+						<div class="col-md-10">
+							<div class="input-group input-medium">
+								<input type="hidden" id="constructionDepartmentId" name="constructionDepartmentId"
+									   class="form-control input-inline input-xlarge" value="${sysUser.departmentId}"/>
+								<input type="text" id="constructionDepartmentName" name="constructionDepartmentName"
+									   readonly="readonly"
+									   class="form-control input-inline input-xlarge"
+									   placeholder="" value="${sysUser.departmentName}"/>
+								<span class="input-group-btn">
+                                       <button class="btn btn-primary" id="choiceConstructionDepartment"
+											   onclick="javascript:getZtreeConstructionDepartment()"
+											   type="button"><i class="fa fa-search"/></i>选择
+                                       </button>
+                            </span>
+							</div>
+						</div>
+						<label id="constructionDepartmentTip"></label>
+					</div>
 				</div>
 				<div class="form-actions">
 					<div class="row">
