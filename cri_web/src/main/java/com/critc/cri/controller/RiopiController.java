@@ -64,16 +64,19 @@ public class RiopiController {
         // 定义分页对象
         PageNavigate pageNavigate = new PageNavigate(url, riopiSearchVO.getPageIndex(), recordCount);
         // 设置分页的变量
-        mv.addObject("pageNavigate", pageNavigate);
+        mv.addObject(" ", pageNavigate);
         mv.addObject("list", list);
         mv.addObject("backUrl", StringUtil.encodeUrl(url));
         return mv;
     }
     @RequestMapping("/toAdd")
-    public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse   response) {
         ModelAndView mv = new ModelAndView();
         // 部门列表
         mv.setViewName("/cri/Riopi/add");
+        // 树形结构
+        String ztree = riopiService.createZtreeByModule();// 信息系统列表
+        mv.addObject("zTree", ztree);
         // 设置返回的url
         Riopi riopi = new Riopi();
         mv.addObject("riopi", riopi);
@@ -96,6 +99,9 @@ public class RiopiController {
     public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
         ModelAndView mv = new ModelAndView();
         Riopi riopi = riopiService.get(id);
+        // 树形结构
+        String ztree = riopiService.createZtreeByModule();// 信息系统列表
+        mv.addObject("zTree", ztree);
         mv.addObject("riopi", riopi);
         mv.setViewName("/cri/Riopi/update");
         // 设置返回的url

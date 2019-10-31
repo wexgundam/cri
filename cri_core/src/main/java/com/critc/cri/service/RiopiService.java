@@ -4,9 +4,10 @@ import com.critc.cri.dao.RiopiDao;
 import com.critc.cri.model.Riopi;
 import com.critc.cri.vo.RiopiSearchVO;
 import com.critc.util.page.PageSearchVO;
-import com.critc.util.string.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.critc.util.model.ComboboxVO;
+import com.critc.util.string.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class RiopiService  extends PageSearchVO{
         return riopiDao.get(id);
     }
     public List<Riopi> list(RiopiSearchVO riopiSearchVO) {
-        // 获
+        // 获取所有部门
         List<Riopi> list = riopiDao.list(riopiSearchVO);
         return list;
     }
@@ -92,6 +93,16 @@ public class RiopiService  extends PageSearchVO{
     public int delete(int id) {
             return riopiDao.delete(id);
     }
+
+    public int count(RiopiSearchVO riopiSearchVO) {
+        return riopiDao.count(riopiSearchVO);
+    }
+    public List<ComboboxVO> listCombo() {
+        //获取数据集
+        List<ComboboxVO> list = riopiDao.listCombo();
+
+        return list;
+    }
     /**
      *
      * what: 生成Ztree的树节点,新增机构时使用
@@ -111,7 +122,5 @@ public class RiopiService  extends PageSearchVO{
         }
         return StringUtil.subTract(sb.toString());
     }
-    public int count(RiopiSearchVO riopiSearchVO) {
-        return riopiDao.count(riopiSearchVO);
-    }
+
 }

@@ -13,6 +13,8 @@
     <critc-css>
         <link href="${staticServer}/assets/treetable/treeTable.min.css?version=${versionNo}" rel="stylesheet"
               type="text/css"/>
+        <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css"
+              rel="stylesheet" type="text/css" />
     </critc-css>
 </head>
 
@@ -39,8 +41,8 @@
     <div class="col-md-10">
         <form role="form" id="roleForm" name="roleForm" class="form-horizontal"
               action="add.htm" method="post">
-            <input type="hidden" name="backUrl" value="${backUrl }"><input
-                type="hidden" id="moduleArr" name="moduleArr" value="">
+            <input type="hidden" name="backUrl" value="${backUrl }">
+            <input type="hidden" id="moduleArr" name="moduleArr" value="">
             <input type="hidden" name="functionArr" id="functionArr" value="">
             <div class="form-body">
                 <div class="form-group">
@@ -51,20 +53,29 @@
                                value="" maxlength="20"> <label id="nameTip"></label>
                     </div>
                 </div>
-                <div class="form-body">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">上级目录：</label>
-                        <div class="col-md-10">
-                            <input id="parentId" name="parentId" type="text" class="form-control input-inline  input-xlarge"
-                                   placeholder=""
-                                   value="" maxlength="20"> <label id="parentIdTip"></label>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">上级目录：</label>
+                    <div class="col-md-10">
+                        <div class="input-group input-xlarge">
+                            <input id="parentId" type="text" name="parentId"
+                                   readonly="readonly"
+                                   class="form-control  "
+                                   placeholder="" value=""/>
+                            <span class="input-group-btn">
+                                            <button class="btn btn-primary" id="choice"
+                                                    onclick="javascript:getZtree()"
+                                                    type="button"><i class="fa fa-search"/></i>选择
+                                        </button>
+                                       </span>
                         </div>
+                        <label id="departmentNameTip"></label>
                     </div>
+                </div>
                     <div class="form-body">
                         <div class="form-group">
                             <label class="col-md-2 control-label">业务管理部门主键：</label>
                             <div class="col-md-10">
-                                <input id="bmDepartmentId" name="bmDepartmentId" type="text" class="form-control input-inline  input-xlarge"
+                                <input id="bmDepartmentId" name="bmDepartmentId" type="text" class="for m-control input-inline  input-xlarge"
                                        placeholder=""
                                        value="" maxlength="20"> <label id="bmDepartmentIdTip"></label>
                             </div>
@@ -78,6 +89,8 @@
                                            value="" maxlength="20"> <label id="bmDepartmentNameTip"></label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">排序：</label>
                     <div class="col-md-10">
@@ -108,130 +121,60 @@
         </form>
     </div>
 </div>
-
+<div class="modal fade" id="systemcontentList" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">选择总体规划目录</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="tree" class="ztree" style="width: 560px; overflow: auto;"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="javascript:getSelected();">确认</button>
+                <button type="button" class="btn " data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <critc-script>
-    <script src="${staticServer }/assets/treetable/jquery.treeTable.min.js" type="text/javascript"></script>
+    <script src="${staticServer}/assets/cropper3.0/cropper.min.js"></script>
+    <script src="${staticServer}/assets/cropper3.0/main.js"></script>
+    <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#treeTable").treeTable({
-                expandLevel: 1
+
+        function getZtree() {
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: ""
+                    }
+                }
+            };
+            var zNodes = [${zTree}]
+            jQuery(document).ready(function () {
+                var t = $("#tree");
+                t = $.fn.zTree.init(t, setting, zNodes);
             });
+            $('#systemcontentList').modal('show');
+        }
 
-            $(".child").click(function () {
-                $(this).parent().parent().parent().parent().find(".father").prop("checked", true);
-            })
-            $(".father").click(function () {  //复选框的选中与撤销
+        function getSelected() {
+            var treeObj = $.fn.zTree.getZTreeObj("tree");
+            var nodes = treeObj.getSelectedNodes();
+            if (nodes.length > 0) {
+                $("#parentId").val(nodes[0].id);
+              //  $("#RIOPI_NAME").val(nodes[0].name);
+                $('#systemcontentList').modal('hide');
+            }
+            else return;
 
-                if($(this).parents("tr").find(".sec").find(".child").val()!=undefined){ 	//叶子结点的选中与撤销
-                    if (this.checked) {
-                        $(this).parent().parent().parent().find(".child").prop("checked", true);
-                    } else {
-                        $(this).parent().parent().parent().find(".child").prop("checked", false);
-                    }
-                }else{    //父级节点的选中与撤销
-                    var fatherId = $(this).val();
-                    if (this.checked) {
-                        var objs = $("#treeTable").find("."+fatherId).find(".father");   //查找所有二级节点
-                        for( var i = 0 ;i<objs.length;i++){
-                            var secFatherId = objs[i].getAttribute("value");
-                            if(secFatherId!=""&&secFatherId!=undefined){        //设置三级节点操作
-                                $("#treeTable").find("."+secFatherId).find(".father").prop("checked", true);
-                                $("#treeTable").find("."+secFatherId).find(".child").prop("checked", true);
-                            }
-                        }
-                        $("#treeTable").find("."+fatherId).find(".father").prop("checked", true);
-                        $("#treeTable").find("."+fatherId).find(".child").prop("checked", true);
-                    }else{
-                        var objs = $("#treeTable").find("."+fatherId).find(".father");//查找所有二级节点
-                        for( var i = 0  ;i<objs.length;i++){
-                            var secFatherId = objs[i].getAttribute("value");
-                            if(secFatherId!=""&&secFatherId!=undefined){          //设置三级节点操作
-                                $("#treeTable").find("."+secFatherId).find(".father").prop("checked", false);
-                                $("#treeTable").find("."+secFatherId).find(".child").prop("checked", false);
-                            }
-                        }
-                        $("#treeTable").find("."+fatherId).find(".father").prop("checked", false);
-                        $("#treeTable").find("."+fatherId).find(".child").prop("checked", false);
-                    }
-                }
-
-            })
-
-            //全选/取消全选
-            $("#checkAllChange").click(function(){
-                if (this.checked == true) {
-                    $(".father").each(function() {
-                        this.checked = true;
-                    });
-                    $(".child").each(function() {
-                        this.checked = true;
-                    });
-                }else{
-                    $(".father").each(function() {
-                        this.checked = false;
-                    });
-                    $(".child").each(function() {
-                        this.checked = false;
-                    });
-                }
-            });
-
-            //监听复选框点击事件，当有没选中时，取消全选
-            $(":checkbox").click(function () {
-                var flag =  true;
-                $("#treeTable").find(':checkbox').each(function(){
-                    if(this.id!="checkAllChange"){
-                        if (!$(this).prop("checked")) {
-                            flag = false;
-                            $("#checkAllChange").prop("checked",false);
-                        }
-                    }
-                });
-                if(flag){
-                    $("#checkAllChange").prop("checked",true);
-                }
-            })
-
-            $("#roleForm").validate({
-                debug: true,
-                errorElement: "label",
-                errorClass: "valiError",
-                errorPlacement: function (error, element) {
-                    error.appendTo($("#" + element.attr('id') + "Tip"));
-                },
-                rules: {
-                    name: {
-                        required: true,
-                        maxlength: 20
-                    },
-                    description: {
-                        maxlength: 50
-                    },
-                    displayOrder: {
-                        number: true,
-                        required: true,
-                        maxlength: 6
-                    }
-                },
-                messages: {},
-                submitHandler: function (form) {
-                    //拼接所有选中的module和function
-                    var moduleArr = "";
-                    $('input:checkbox[name=module]:checked').each(function (i) {
-                        moduleArr += $(this).val() + "@@";
-                    });
-                    $("#moduleArr").val(moduleArr);
-                    var functionArr = "";
-                    $('input:checkbox[name=function]:checked').each(function (i) {
-                        functionArr += $(this).val() + "@@";
-                    });
-                    $("#functionArr").val(functionArr);
-
-                    form.submit();
-                }
-            });
-        });
+        }
     </script>
 </critc-script>
