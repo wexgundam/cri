@@ -2,10 +2,13 @@ package com.critc.cri.controller;
 
 import com.critc.core.pub.PubConfig;
 import com.critc.cri.model.ExistingProject;
+import com.critc.cri.model.RailwayInformationSystem;
 import com.critc.cri.service.ExistingProjectService;
+import com.critc.cri.service.RiopiService;
 import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 
+import com.critc.cri.vo.RailwayInformationSystemSearchVO;
 import com.critc.sys.service.SysDepartmentService;
 import com.critc.sys.service.SysDicService;
 
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import sun.security.x509.AttributeNameEnumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +49,11 @@ public class ExistingProjectController{
     @Autowired
     private RailwayInformationSystemService railwayInformationSystemService;
     /**
+     * 信息系统Service
+     */
+    @Autowired
+    private RiopiService riopiService;
+    /**
      * 字典Sevice
      */
     @Autowired
@@ -61,6 +70,7 @@ public class ExistingProjectController{
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ExistingProjectSearchVO existingProjectSearchVO) {
         ModelAndView mv = new ModelAndView();
+        ExistingProject existingProject = new ExistingProject();
         mv.setViewName("/cri/existingproject/index");
         // 获取查询总数
         int recordCount = existingProjectService.count(existingProjectSearchVO);
@@ -68,12 +78,17 @@ public class ExistingProjectController{
         // 定义分页对象
         PageNavigate pageNavigate = new PageNavigate(url, existingProjectSearchVO.getPageIndex(), recordCount);
         List<ExistingProject> list = existingProjectService.list(existingProjectSearchVO);
+        //获取晓玉列表
+        String ztreeRis = riopiService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
         // 设置分页的变量
         mv.addObject("pageNavigate", pageNavigate);
         mv.addObject("list", list);
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
+        mv.addObject("existingProject", existingProject);
+
         // 设置返回url
         BackUrlUtil.createBackUrl(mv, request, url);
         return mv;
@@ -109,7 +124,7 @@ public class ExistingProjectController{
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         mv.setViewName("/cri/existingproject/add");
-        //获取戎珊列表
+        //获取总列表
         String ztreeRis = railwayInformationSystemService.createZtreeByModule();
         mv.addObject("ztreeRis", ztreeRis);
         //获取建设单位zTree
@@ -139,13 +154,12 @@ public class ExistingProjectController{
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        //获取戎珊列表
+        //获取戎珊+xiao'yu列表
         String ztreeRis = railwayInformationSystemService.createZtreeByModule();
         mv.addObject("ztreeRis", ztreeRis);
         //获取建设单位zTree
         String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
         mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
-
         mv.addObject("existingProject", existingProject);
         mv.setViewName("/cri/existingproject/update");
         // 设置返回的url
