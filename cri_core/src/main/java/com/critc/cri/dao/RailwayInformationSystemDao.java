@@ -143,7 +143,8 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
      * @author rs created on 2019年9月4日
      */
     public List<RailwayInformationSystem> list() {
-        String sql = "select t.id,t.name from t_railway_information_system t ";
+        String sql="select * from (select t1.id,t1.name,t1.parent_id riopi_id,t1.last_edited_at from t_riopi t1" +
+                " union select t.id,t.name,t.riopi_id,t.last_edited_at from t_railway_information_system t) a where 1=1";
         return list(sql);
     }
 

@@ -121,7 +121,7 @@ public class RailwayInformationSystemService {
         List<RailwayInformationSystem> listModule =railwayInformationSystemDao.list();
         StringBuilder sb = new StringBuilder();
         for (RailwayInformationSystem sysModule : listModule) {
-            sb.append("{id : \"" + sysModule.getId()  + "\",name :\""
+            sb.append("{id : \"" + sysModule.getId() + "\",pId :\"" + sysModule.getRIOPI_ID() + "\",name :\""
                     + sysModule.getName() + "\",open : false");
             sb.append("},");
         }
