@@ -25,8 +25,8 @@
             <input type="hidden" name="functionArr" id="functionArr" value="">
             <div class="form-body">
                 <div class="form-group">
-                    <div class="col-md-10">
-                        <label class="col-md-2 control-label">既有信息系统名称：</label>
+                    <label class="col-md-3 control-label">既有信息系统名称：</label>
+                        <div class="col-md-9">
                         <input id="name" name="name" type="text" class="form-control input-inline  input-xlarge"
                                placeholder=""
                                value="${existingProject.name}" maxlength="20"> <label id="nameTip"></label>
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">归属信息化总体规划目录名称：</label>
                     <div class="col-md-9">
-                        <div class="input-group input-medium">
+                        <div class="input-group input-xlarge">
                             <input type="hidden" id="risId" name="risId"
                                    class="form-control" value="${existingProject.risId}"/>
                             <input type="text" id="risName" name="risName"
@@ -44,7 +44,7 @@
                                    placeholder="" value="${existingProject.risName}"/>
                             <span class="input-group-btn">
                                             <button class="btn btn-primary" id="choice"
-                                                    onclick="javascript:getZtree()"
+                                                    onclick="javascript:getZtreeRis()"
                                                     type="button"><i class="fa fa-search"/></i>选择
                                         </button>
                                        </span>
@@ -74,8 +74,8 @@
                     <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目类型：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">项目类型：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.projectTypeCode"
                                      class="form-control input-inline  input-xlarge" name="projectTypeCode"
                                      id="type">
@@ -109,8 +109,8 @@
                     <%--</div>--%>
                 <%--</div>--%>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目进度：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">项目进度：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.projectProgressCode"
                                      class="form-control input-inline  input-xlarge" name="projectProgressCode"
                                      id="type">
@@ -124,8 +124,8 @@
 
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">通过评审的网络安全等级定级：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.reviewPassedCpc"
                                      class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
                                      id="type">
@@ -136,32 +136,15 @@
                         <label id="typeTip"></label>
                     </div>
                 </div>
-
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-md-2 control-label">建设单位ID：</label>--%>
-                    <%--<div class="col-md-10">--%>
-                        <%--<input id="constructionDepartmentId" name="constructionDepartmentId" type="text" class="form-control input-inline  input-xlarge"--%>
-                               <%--placeholder=""--%>
-                               <%--value="${existingProject.constructionDepartmentId}" maxlength="20"> <label id="constructionDepartmentIdTip"></label>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-md-2 control-label">建设单位名称：</label>--%>
-                    <%--<div class="col-md-10">--%>
-                        <%--<input id="constructionDepartmentName" name="constructionDepartmentName" type="text" class="form-control input-inline  input-xlarge"--%>
-                               <%--placeholder=""--%>
-                               <%--value="${existingProject.constructionDepartmentName}" maxlength="20"> <label id="constructionDepartmentNameTip"></label>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
                 <div class="form-group" id="constructionDepartmentList">
-                    <label class="col-md-2 control-label">建设单位：</label>
-                    <div class="col-md-10">
-                        <div class="input-group input-medium">
+                    <label class="col-md-3 control-label">建设单位：</label>
+                    <div class="col-md-9">
+                        <div class="input-group input-xlarge">
                             <input type="hidden" id="constructionDepartmentId" name="constructionDepartmentId"
-                                   class="form-control input-inline input-xlarge" value="${sysUser.departmentId}"/>
+                                   class="form-control" value="${sysUser.departmentId}"/>
                             <input type="text" id="constructionDepartmentName" name="constructionDepartmentName"
                                    readonly="readonly"
-                                   class="form-control input-inline input-xlarge"
+                                   class="form-control"
                                    placeholder="" value="${sysUser.departmentName}"/>
                             <span class="input-group-btn">
                                        <button class="btn btn-primary" id="choiceConstructionDepartment"
