@@ -1,31 +1,38 @@
 package com.critc.cri.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.Null;
+
 import com.critc.core.pub.PubConfig;
 import com.critc.cri.model.ExistingProject;
 import com.critc.cri.model.RailwayInformationSystem;
+
 import com.critc.cri.service.ExistingProjectService;
 import com.critc.cri.service.RiopiService;
 import com.critc.cri.service.RailwayInformationSystemService;
 import com.critc.cri.vo.ExistingProjectSearchVO;
 
-import com.critc.cri.vo.RailwayInformationSystemSearchVO;
 import com.critc.sys.service.SysDepartmentService;
 import com.critc.sys.service.SysDicService;
 
+import com.critc.sys.vo.SysReleaseSearchVO;
 import com.critc.util.code.GlobalCode;
 import com.critc.util.page.PageNavigate;
 import com.critc.util.session.SessionUtil;
 import com.critc.util.string.BackUrlUtil;
 import com.critc.util.string.StringUtil;
+import com.critc.util.web.WebUtil;
+import com.sun.tools.internal.xjc.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import sun.security.x509.AttributeNameEnumeration;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+
+import java.net.URL;
 import java.util.List;
 
 @RequestMapping("/cri/existingproject")
@@ -49,11 +56,6 @@ public class ExistingProjectController{
     @Autowired
     private RailwayInformationSystemService railwayInformationSystemService;
     /**
-     * 信息系统Service
-     */
-    @Autowired
-    private RiopiService riopiService;
-    /**
      * 字典Sevice
      */
     @Autowired
@@ -68,9 +70,8 @@ public class ExistingProjectController{
      * @author 卢薪竹 created by 8:57 2019/8/28
      */
     @RequestMapping("/index")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ExistingProjectSearchVO existingProjectSearchVO) {
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response, ExistingProjectSearchVO existingProjectSearchVO,@Valid RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject) {
         ModelAndView mv = new ModelAndView();
-        ExistingProject existingProject = new ExistingProject();
         mv.setViewName("/cri/existingproject/index");
         // 获取查询总数
         int recordCount = existingProjectService.count(existingProjectSearchVO);
@@ -78,21 +79,52 @@ public class ExistingProjectController{
         // 定义分页对象
         PageNavigate pageNavigate = new PageNavigate(url, existingProjectSearchVO.getPageIndex(), recordCount);
         List<ExistingProject> list = existingProjectService.list(existingProjectSearchVO);
-        //获取晓玉列表
-        String ztreeRis = riopiService.createZtreeByModule();
-        mv.addObject("ztreeRis", ztreeRis);
+//        //ztree
+//        String ztreeRis = riopiService.createZtreeByModule();
+//        mv.addObject("ztreeRis", ztreeRis);
         // 设置分页的变量
         mv.addObject("pageNavigate", pageNavigate);
         mv.addObject("list", list);
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        mv.addObject("existingProject", existingProject);
-
+        //addRailwayInfoSystemTable(railwayInformationSystem,existingProject,url);
+        //addRailwayInfoSystemTable(railwayInformationSystem,existingProject);
+        railwayInformationSystem.setName(existingProject.getName()+"!!!!!");
         // 设置返回url
         BackUrlUtil.createBackUrl(mv, request, url);
         return mv;
     }
+//        public String addRailwayInfoSystemTable(RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject,String url){
+//            return url;
+//        }
+        public void addRailwayInfoSystemTable(RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject){
+            railwayInformationSystem.setName(existingProject.getName()+"!!!!!");
+            if(railwayInformationSystem.getName()!=null && !railwayInformationSystem.getName().equals("null!!!!!")){
+                railwayInformationSystemService.add(railwayInformationSystem);
+            }
+        }
+    @RequestMapping("/import")
+    public ModelAndView buttonClick(HttpServletRequest request, ExistingProjectSearchVO existingProjectSearchVO,@Valid RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/cri/existingproject/index");
+        //String url="/cri/existingproject/index.htm";
+        String url = pubConfig.getDynamicServer() + "/cri/existingproject/index.htm?";
+        // 获取查询总数
+        int recordCount = existingProjectService.count(existingProjectSearchVO);
+        // 定义分页对象
+        PageNavigate pageNavigate = new PageNavigate(url, existingProjectSearchVO.getPageIndex(), recordCount);
+        List<ExistingProject> list = existingProjectService.list(existingProjectSearchVO);
+        mv.addObject("pageNavigate", pageNavigate);
+        mv.addObject("list", list);
+        //BackUrlUtil.setBackUrl(mv, request);
+        if(railwayInformationSystem.getName()!=null && !railwayInformationSystem.getName().equals("null!!!!!")){
+            railwayInformationSystemService.add(railwayInformationSystem);
+        }
+        BackUrlUtil.createBackUrl(mv, request, url);
+        return mv;
+    }
+
     /**
      * what: 设置分页url，一般有查询条件的才会用到
      * @param : existingProjectSearchVO 查询条件
@@ -102,14 +134,13 @@ public class ExistingProjectController{
      */
     private String createUrl(ExistingProjectSearchVO existingProjectSearchVO) {
         String url = pubConfig.getDynamicServer() + "/cri/existingproject/index.htm?";
-
         // 如果为模糊查询，要把该字段encode
         if (StringUtil.isNotNullOrEmpty(existingProjectSearchVO.getName())) {
             url += "&name=" + existingProjectSearchVO.getName();
         }
         return url;
     }
-    /**
+   /**
      * what: 新增
      * @param request request
      * @return 到新增界面
@@ -135,34 +166,6 @@ public class ExistingProjectController{
         //  return mv;
         // 设置返回的url：方法2
         mv.addObject("existingProject",existingProject);
-        BackUrlUtil.setBackUrl(mv, request);
-        return mv;
-    }
-    /**
-     * what: 修改既有信息系统
-     * @param request request
-     * @param response response
-     * @param id
-     * @return 到修改页面
-     * @author
-     */
-    @RequestMapping("/toUpdate")
-    public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
-        ModelAndView mv = new ModelAndView();
-        ExistingProject existingProject = existingProjectService.get(id);
-        // 添加字典 项目类型 / 进度编码 / 网络安全等级
-        mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
-        mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
-        mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        //获取戎珊+xiao'yu列表
-        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
-        mv.addObject("ztreeRis", ztreeRis);
-        //获取建设单位zTree
-        String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
-        mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
-        mv.addObject("existingProject", existingProject);
-        mv.setViewName("/cri/existingproject/update");
-        // 设置返回的url
         BackUrlUtil.setBackUrl(mv, request);
         return mv;
     }
@@ -198,6 +201,35 @@ public class ExistingProjectController{
             return "forward:/success.htm?resultCode=" + GlobalCode.SAVE_SUCCESS;
         }
     }
+    /**
+     * what: 修改既有信息系统
+     * @param request request
+     * @param response response
+     * @param id
+     * @return 到修改页面
+     * @author
+     */
+    @RequestMapping("/toUpdate")
+    public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response, int id) {
+        ModelAndView mv = new ModelAndView();
+        ExistingProject existingProject = existingProjectService.get(id);
+        // 添加字典 项目类型 / 进度编码 / 网络安全等级
+        mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+        mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+        mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
+        //获取戎珊+xiao'yu列表
+        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        mv.addObject("ztreeRis", ztreeRis);
+        //获取建设单位zTree
+        String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
+        mv.addObject("ztreeConstructionDepartment", ztreeConstructionDepartment);
+        mv.addObject("existingProject", existingProject);
+        mv.setViewName("/cri/existingproject/update");
+        // 设置返回的url
+        BackUrlUtil.setBackUrl(mv, request);
+        return mv;
+    }
+
     /**
      *
      * what: 修改

@@ -5,18 +5,16 @@
   Time: 9:49
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="utf-8"%>
 <%@include file="../../common/taglib.jsp" %>
-
-
 <head>
     <title>既有信息系统</title>
+    <critc-css>
+        <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/cropper.min.css"/>
+        <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/main.css"/>
+        <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css" rel="stylesheet" type="text/css"/>
+    </critc-css>
 </head>
-<critc-css>
-    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/cropper.min.css"/>
-    <link rel="stylesheet" href="${staticServer}/assets/cropper3.0/main.css"/>
-    <link href="${staticServer }/assets/zTree3.5/css/zTreeStyle/metro.css" rel="stylesheet" type="text/css"/>
-</critc-css>
 <body>
 <div class="portlet box blue">
     <div class="portlet-title">
@@ -52,12 +50,14 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+
+
         <table id="treeTable" class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
                 <%--<th width=60>#</th>--%>
                 <th>系统名称</th>
-                <th>更名后系统名称</th>
+                <%--<th>更名后系统名称</th>--%>
                 <th>归属信息系统名称</th>
                 <th>项目类型</th>
                 <th>项目进度</th>
@@ -74,7 +74,7 @@
                 <tr>
                     <%--<td>${st.index+1 }</td>--%>
                     <%--<td>${existingProject.name} </td>--%>
-                    <td><a href="../railwayinformationsystem/toUpdate.htm?id=${existingProject.risId}&backUrl=${backUrl}">${existingProject.name}</a></td>
+                    <td><a href="../railwayinformationsystem/toAdd.htm?id=${existingProject.risId}&backUrl=${backUrl}">${existingProject.name}</a></td>
                     <td>${existingProject.risName}</td>
                     <td>${existingProject.projectTypeName}</td>
                     <td>${existingProject.projectProgressName}</td>
@@ -84,6 +84,12 @@
                     <td>${existingProject.lastEditorRealName }</td>
                     <td><fmt:formatDate value="${existingProject.lastEditedAt}" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td name="setCurrentId">
+                        <%--<c:if test="${empty existingProject.risName}">--%>
+                            <form action="index.htm">
+                                <input type="hidden" name="name" value="${existingProject.name}" class="fa fa-search"/>
+                                <input type="submit" value="导入">
+                            </form>
+                        <%--</c:if>--%>
                         <button class="btn btn-primary" id="btnAttach"
                                 onclick="javascript:getZtreeRis()"
                                 type="button"><i class="fa fa-search"/></i>归属
@@ -152,6 +158,32 @@
     <script src="${staticServer}/assets/cropper3.0/main.js"></script>
     <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+        $(function () {$("#btnSearch").bind('click', searchModule);})
+
+        // 查询方法
+        var searchModule = function () {
+            var url = "index.htm?";
+            window.location = encodeURI(url);
+        }
+
+
+        $(document).ready(function(){
+            $("#btnSubmit").click(function(){
+                var result =get_table_data();
+                $("#hidTD").val(JSON.stringify(result));
+                $("#form").submit();
+            });
+        });
+        function get_table_data(){
+            var tr =$("#table tr");
+            var result =[];
+            for(var i=0;i<tr.length;i++){
+                var tds=$(tr[i]).find("td");
+                if(tds.length>0){
+                    result.push()
+                }
+            }
+        }
         function getZtreeRis(){
 //            var getCurrentID=document.getElementsByName("setCurrentId").value;
 //            document.getElementById('getCurrentId').value = getCurrentID;

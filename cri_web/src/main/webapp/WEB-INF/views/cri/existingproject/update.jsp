@@ -160,7 +160,7 @@
             <div class="form-actions">
                 <div class="row">
                     <div class="col-md-offset-2 col-md-9">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"/></i> 保存</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"/></i>保存</button>
                         <button type="button" class="btn default" onclick="history.back(-1)"><i
                                 class="fa fa-undo"/></i>  取消
                         </button>

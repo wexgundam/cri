@@ -20,13 +20,13 @@
     <div class="col-md-10">
         <form role="form" id="roleForm" name="roleForm" class="form-horizontal"
               action="add.htm" method="post">
-            <input type="hidden" name="backUrl" value="${backUrl }"><input
+            <input type="hidden" name="backUrl" value="${backUrl}"><input
                 type="hidden" id="moduleArr" name="moduleArr" value="">
             <input type="hidden" name="functionArr" id="functionArr" value="">
             <div class="form-body">
                 <div class="form-group">
-                    <label class="col-md-2 control-label">系统名称：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">系统名称：</label>
+                    <div class="col-md-9">
                         <input id="name" name="name" type="text" class="form-control input-inline  input-xlarge"
                                placeholder=""
                                value="" maxlength="20"> <label id="nameTip"></label>
@@ -35,26 +35,26 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">归属信息化总体规划目录：</label>
                     <div class="col-md-9">
-                        <div class="input-group input-medium">
+                        <div class="input-group input-xlarge">
                             <input type="hidden" id="risId" name="risId"
                                    class="form-control" value="${existingProject.risId}"/>
                             <input type="text" id="risName" name="risName"
                                    readonly="readonly"
-                                   class="form-control  "
+                                   class="form-control"
                                    placeholder="" value="${existingProject.risName}"/>
                             <span class="input-group-btn">
-                                            <button class="btn btn-primary" id="choice"
+                                    <button class="btn btn-primary" id="choice"
                                                     onclick="javascript:getZtreeRis()"
                                                     type="button"><i class="fa fa-search"/></i>选择
-                                        </button>
-                                       </span>
+                                    </button>
+                            </span>
                         </div>
                         <label id="risNameTip"></label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目类型：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">项目类型：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.projectTypeCode"
                                      class="form-control input-inline  input-xlarge" name="projectTypeCode"
                                      id="type">
@@ -67,8 +67,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">项目进度：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">项目进度：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.projectProgressCode"
                                      class="form-control input-inline  input-xlarge" name="projectProgressCode"
                                      id="type">
@@ -80,8 +80,8 @@
                     <label id="projectProgressNameTip"></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">通过评审的网络安全等级定级：</label>
-                    <div class="col-md-10">
+                    <label class="col-md-3 control-label">通过评审的网络安全等级定级：</label>
+                    <div class="col-md-9">
                         <form:select path="existingProject.reviewPassedCpc"
                                      class="form-control input-inline  input-xlarge" name="reviewPassedCpc"
                                      id="type">
@@ -93,21 +93,21 @@
                     <label id="reviewPassedCpcTip"></label>
                 </div>
                 <div class="form-group" id="constructionDepartmentList">
-                    <label class="col-md-2 control-label">建设单位：</label>
+                    <label class="col-md-3 control-label">建设单位：</label>
                     <div class="col-md-9">
-                        <div class="input-group input-medium">
+                        <div class="input-group input-xlarge">
                             <input type="hidden" id="constructionDepartmentId" name="constructionDepartmentId"
                                    class="form-control" value="${sysUser.departmentId}"/>
                             <input type="text" id="constructionDepartmentName" name="constructionDepartmentName"
                                    readonly="readonly"
-                                   class="form-control  "
+                                   class="form-control"
                                    placeholder="" value="${sysUser.departmentName}"/>
                             <span class="input-group-btn">
                                             <button class="btn btn-primary" id="choiceConstructionDepartment"
                                                     onclick="javascript:getZtreeConstructionDepartment()"
                                                     type="button"><i class="fa fa-search"/></i>选择
-                                        </button>
-                                       </span>
+                                            </button>
+                            </span>
                         </div>
                     </div>
                     <label id="constructionDepartmentTip"></label>
