@@ -108,29 +108,14 @@ public class RailwayInformationSystemService {
     public int count(RailwayInformationSystemSearchVO railwayInformationSystemSearchVO) {
         return railwayInformationSystemDao.count(railwayInformationSystemSearchVO);
     }
-    /**
-     *
-     * what: 生成Ztree的树节点,新增机构时使用
-     *
-     * @return Ztree
-     *
-     * @author rs  created on 2017年10月30日
-     */
-    public String createZtreeByModule() {
-        // 信息化名称列表
-        List<RailwayInformationSystem> listModule =railwayInformationSystemDao.list();
-        StringBuilder sb = new StringBuilder();
-        for (RailwayInformationSystem sysModule : listModule) {
-            sb.append("{id : \"" + sysModule.getId() + "\",pId :\"" + sysModule.getRIOPI_ID() + "\",name :\""
-                    + sysModule.getName() + "\",open : false");
-            sb.append("},");
-        }
-        return StringUtil.subTract(sb.toString());
+    //  获取信息化总体规划目录和铁路信息系统目录
+
+    public List<RailwayInformationSystem> list() {
+        // 获取数据集
+        List<RailwayInformationSystem> list = railwayInformationSystemDao.list();
+
+        return list;
     }
 
-    public List<RailwayInformationSystem> getIdByriopiname(String riopiname) {
-
-        return railwayInformationSystemDao.getIdByriopiname(riopiname);
-    }
 
 }

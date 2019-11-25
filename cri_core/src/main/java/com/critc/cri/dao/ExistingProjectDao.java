@@ -80,6 +80,7 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
                 ":risName) ";
         return insertForId(sql, existingProject, "id");
     }
+
     public int delete(int id) {
         String sql = "delete from t_existing_project where id=?";
         return delete(sql, id);
@@ -124,6 +125,15 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
                 "where id=?";
         return get(sql, id);
     }
+    public ExistingProject getData(int id) {
+        String sql = "select nvl(t.ris_id,0),t.name,t.project_type_code,t.project_type_name,t.project_progress_code," +
+                "t.project_progress_name,t.review_passed_dar,t.review_passed_cpc,t.review_passed_tts," +
+                "t.review_passed_fsr,nvl(t.construction_department_id,0)," +
+                "t.construction_department_name,nvl(t.order_index,0),nvl(t.creator_id,0),t.creator_real_name," +
+                "nvl(t.last_editor_id,0),t.last_editor_real_name,t.ris_name from t_existing_project t" +
+                " where id=?";
+        return get(sql, id);
+    }
     /**
      * what:既有信息系统列表
      * @param : existingProjectSearchVO 角色查询VO
@@ -132,7 +142,7 @@ public class ExistingProjectDao extends BaseDao<ExistingProject,ExistingProjectS
      * @author 卢薪竹 created by 8:52 2019/8/28
     */
     public List<ExistingProject> list(ExistingProjectSearchVO existingProjectSearchVO) {
-        String sql ="select t.id,t.name,t.ris_name," +
+        String sql ="select t.id,t.name,t.ris_name,t.ris_id," +
                 "(select name from t_sys_dic where category='PROJECT_TYPE' and code = project_type_code) project_type_name,"+
                 "(select name from t_sys_dic where category='PROJECT_PROGRESS' and code = project_progress_code) project_progress_name," +
                 "t.review_passed_cpc,t.construction_department_name,t.creator_real_name,t.last_editor_real_name,t.last_edited_at from t_existing_project t where 1=1";
