@@ -223,5 +223,13 @@ public class RailwayInformationSystemController {
 			return "forward:/success.htm?resultCode=" + GlobalCode.DELETE_SUCCESS;
 		}
 	}
+
+	@RequestMapping("/datalist")
+	public ModelAndView getdatalist(HttpServletRequest request, HttpServletResponse response, int id) {
+		ModelAndView mv = new ModelAndView();
+		RailwayInformationSystem railwayInformationSystem = railwayInformationSystemService.get(id);
+		mv.addObject("systeminfo", railwayInformationSystem);
+		return mv;
+	}
 	
 }

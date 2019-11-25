@@ -9,6 +9,7 @@ import com.critc.core.pub.PubConfig;
 import com.critc.cri.model.ExistingProject;
 import com.critc.cri.model.RailwayInformationSystem;
 
+import com.critc.cri.model.Riopi;
 import com.critc.cri.service.ExistingProjectService;
 import com.critc.cri.service.RiopiService;
 import com.critc.cri.service.RailwayInformationSystemService;
@@ -19,6 +20,7 @@ import com.critc.sys.service.SysDicService;
 
 import com.critc.sys.vo.SysReleaseSearchVO;
 import com.critc.util.code.GlobalCode;
+import com.critc.util.json.JsonUtil;
 import com.critc.util.page.PageNavigate;
 import com.critc.util.session.SessionUtil;
 import com.critc.util.string.BackUrlUtil;
@@ -34,6 +36,7 @@ import sun.security.x509.AttributeNameEnumeration;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/cri/existingproject")
 @Controller
@@ -43,6 +46,9 @@ public class ExistingProjectController{
     /**
      * 全局参数配置
      */
+    @Autowired
+    private  RiopiService riopiService;
+
     @Autowired
     private PubConfig pubConfig;
     /**
@@ -79,50 +85,32 @@ public class ExistingProjectController{
         // 定义分页对象
         PageNavigate pageNavigate = new PageNavigate(url, existingProjectSearchVO.getPageIndex(), recordCount);
         List<ExistingProject> list = existingProjectService.list(existingProjectSearchVO);
-//        //ztree
-//        String ztreeRis = riopiService.createZtreeByModule();
-//        mv.addObject("ztreeRis", ztreeRis);
+        // 信息化目录和信息系统总表ztree
+        String ztree = existingProjectService.createZtreeByModule();// 信息系统列表
         // 设置分页的变量
         mv.addObject("pageNavigate", pageNavigate);
         mv.addObject("list", list);
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        //addRailwayInfoSystemTable(railwayInformationSystem,existingProject,url);
-        //addRailwayInfoSystemTable(railwayInformationSystem,existingProject);
-        railwayInformationSystem.setName(existingProject.getName()+"!!!!!");
+        mv.addObject("ztree",ztree);
         // 设置返回url
         BackUrlUtil.createBackUrl(mv, request, url);
         return mv;
     }
-//        public String addRailwayInfoSystemTable(RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject,String url){
-//            return url;
-//        }
-        public void addRailwayInfoSystemTable(RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject){
-            railwayInformationSystem.setName(existingProject.getName()+"!!!!!");
-            if(railwayInformationSystem.getName()!=null && !railwayInformationSystem.getName().equals("null!!!!!")){
-                railwayInformationSystemService.add(railwayInformationSystem);
-            }
-        }
-    @RequestMapping("/import")
-    public ModelAndView buttonClick(HttpServletRequest request, ExistingProjectSearchVO existingProjectSearchVO,@Valid RailwayInformationSystem railwayInformationSystem,ExistingProject existingProject) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("/cri/existingproject/index");
-        //String url="/cri/existingproject/index.htm";
-        String url = pubConfig.getDynamicServer() + "/cri/existingproject/index.htm?";
-        // 获取查询总数
-        int recordCount = existingProjectService.count(existingProjectSearchVO);
-        // 定义分页对象
-        PageNavigate pageNavigate = new PageNavigate(url, existingProjectSearchVO.getPageIndex(), recordCount);
-        List<ExistingProject> list = existingProjectService.list(existingProjectSearchVO);
-        mv.addObject("pageNavigate", pageNavigate);
-        mv.addObject("list", list);
-        //BackUrlUtil.setBackUrl(mv, request);
-        if(railwayInformationSystem.getName()!=null && !railwayInformationSystem.getName().equals("null!!!!!")){
-            railwayInformationSystemService.add(railwayInformationSystem);
-        }
-        BackUrlUtil.createBackUrl(mv, request, url);
-        return mv;
+    @RequestMapping("/importData")
+    public void exportList(HttpServletRequest request, HttpServletResponse response,
+                           int no, int riopiId, String riopiName) {
+          Map<String, String> map  = existingProjectService.importData(no,riopiId,riopiName);
+          WebUtil.out(response, JsonUtil.toStr(map));
+    }
+
+    @RequestMapping("/updateData")
+    public void updateList(HttpServletRequest request, HttpServletResponse response,
+                           int no, int riopiId, String riopiName) {
+
+          existingProjectService.updateData(no,riopiId,riopiName);
+
     }
 
     /**
@@ -156,7 +144,7 @@ public class ExistingProjectController{
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
         mv.setViewName("/cri/existingproject/add");
         //获取总列表
-        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        String ztreeRis = existingProjectService.createZtreeByModule();
         mv.addObject("ztreeRis", ztreeRis);
         //获取建设单位zTree
         String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
@@ -217,8 +205,8 @@ public class ExistingProjectController{
         mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
         mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
         mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
-        //获取戎珊+xiao'yu列表
-        String ztreeRis = railwayInformationSystemService.createZtreeByModule();
+        //获取总列表
+        String ztreeRis = existingProjectService.createZtreeByModule();
         mv.addObject("ztreeRis", ztreeRis);
         //获取建设单位zTree
         String ztreeConstructionDepartment = sysDepartmentService.createZtreeByModule();
