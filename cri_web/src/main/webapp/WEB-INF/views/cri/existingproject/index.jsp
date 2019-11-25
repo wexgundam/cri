@@ -30,7 +30,7 @@
             <table class="searchTable">
                 <tr>
                     <td>既有信息系统名称：</td>
-                    <td><input type="text" id="txtExistingProjectname" class="form-control input-middle"
+                    <td><input type="text" id="ExistingProjectname" class="form-control input-middle"
                                placeholder=""
                                value="${ExistingProjectSearchVO.name }"></td>
                     <td>
@@ -66,16 +66,15 @@
                 <th>创建人实名</th>
                 <th>最后修改人</th>
                 <th>最后修改时间</th>
+                    <th>归属目录</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${list}" var="existingProject" varStatus="st">
                 <tr>
-                    <%--<td>${st.index+1 }</td>--%>
-                    <%--<td>${existingProject.name} </td>--%>
-                    <td><a href="../railwayinformationsystem/toAdd.htm?id=${existingProject.risId}&backUrl=${backUrl}">${existingProject.name}</a></td>
-                    <td>${existingProject.risName}</td>
+                    <td><a href="../railwayinformationsystem/datalist.htm?id=${existingProject.risId}" target="_blank">${existingProject.name}</a></td>
+                    <td id="row${existingProject.id}">${existingProject.risName}</td>
                     <td>${existingProject.projectTypeName}</td>
                     <td>${existingProject.projectProgressName}</td>
                     <td>${existingProject.reviewPassedCpc}</td>
@@ -83,19 +82,19 @@
                     <td>${existingProject.creatorRealName}</td>
                     <td>${existingProject.lastEditorRealName }</td>
                     <td><fmt:formatDate value="${existingProject.lastEditedAt}" pattern="yyyy-MM-dd HH:mm"/></td>
-                    <td name="setCurrentId">
-                        <%--<c:if test="${empty existingProject.risName}">--%>
-                            <form action="index.htm">
-                                <input type="hidden" name="name" value="${existingProject.name}" class="fa fa-search"/>
-                                <input type="submit" value="导入">
-                            </form>
-                        <%--</c:if>--%>
+                    <td>
                         <button class="btn btn-primary" id="btnAttach"
-                                onclick="javascript:getZtreeRis()"
-                                type="button"><i class="fa fa-search"/></i>归属
+                                onclick="javascript:getZtree(${existingProject.id})"
+                                type="button">归属
                         </button>
-                        <c:if test="${critc:isP('ExistingProjectUpdate')}">
-                        <a href="toUpdate.htm?id=${existingProject.id }&backUrl=${backUrl}">修改</a>
+                    </td>
+                    <td>
+                        <%--id为400之前为总体目录，400之后为信息系统--%>
+                        <c:if test="${existingProject.risId < 200}">
+                            <button class="btn btn-primary" id="btnimport${existingProject.id}"
+                                    onclick="javascript:importData(${existingProject.id})"
+                                    type="button">导入
+                            </button>
                         </c:if>
                         <c:if test="${existingProject.deletable eq 1 && critc:isP('ExistingProjectDelete')}">
                         <a href="javascript:delExistingProject(${existingProject.id});">删除</a>
@@ -119,24 +118,8 @@
             </div>
 
             <div class="modal-body">
-                <div class="row"><ul id="treeRis" class="ztree" style="width: 560px; overflow: auto;"></ul></div>
-                <div class="row">
-                    //获取全部id
-                    <c:forEach items="${list}" var="existingProject4Ris" varStatus="st">
-                    <tr><td>${existingProject4Ris.id}</td></tr>
-                    </c:forEach>
-                    <tr><td>...................</td></tr>
-                    <tr><td id ="getCurrentId" value=>${existingProject.id}</td></tr>
-                    <tr><td>...................</td></tr>
-
-                    <input type="hidden" id="risId" name="risId"
-                           class="form-control" value="${existingProject.risId}"/>
-                    <input type="text" id="risName" name="risName"
-                           readonly="readonly"
-                           class="form-control"
-                           placeholder="" value="${existingProject.risName}"/>
-                    <button type="button" class="btn btn-primary" onclick="javascript:getSelectedRis();">确认</button>
-                    <button type="button" class="btn" data-dismiss="modal">取消</button>
+                <div>
+                    <ul id="tree" class="ztree" style="width: 560px; overflow: auto;"></ul>
                 </div>
                 <div class="row">
                         <label class="col-md-4 control-label">是否修改项目名称:</label>
@@ -147,7 +130,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="javascript:getSelectedRis();">归档</button>
+                <button type="button" class="btn btn-primary" onclick="javascript:getSelected();">归档</button>
             </div>
         </div>
     </div>
@@ -158,35 +141,11 @@
     <script src="${staticServer}/assets/cropper3.0/main.js"></script>
     <script src="${staticServer }/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {$("#btnSearch").bind('click', searchModule);})
-
-        // 查询方法
-        var searchModule = function () {
-            var url = "index.htm?";
-            window.location = encodeURI(url);
-        }
-
-
-        $(document).ready(function(){
-            $("#btnSubmit").click(function(){
-                var result =get_table_data();
-                $("#hidTD").val(JSON.stringify(result));
-                $("#form").submit();
-            });
-        });
-        function get_table_data(){
-            var tr =$("#table tr");
-            var result =[];
-            for(var i=0;i<tr.length;i++){
-                var tds=$(tr[i]).find("td");
-                if(tds.length>0){
-                    result.push()
-                }
-            }
-        }
-        function getZtreeRis(){
-//            var getCurrentID=document.getElementsByName("setCurrentId").value;
-//            document.getElementById('getCurrentId').value = getCurrentID;
+        $(function () {
+            $("#btnSearch").bind('click', searchModule);
+            $("#btnAdd").bind('click', addExistingProject);
+        })
+        function getZtree(id){
             var setting = {
                 data: {
                     simpleData: {
@@ -197,34 +156,51 @@
                     }
                 }
             };
-            var zNodes = [${ztreeRis}];
+            var zNodes = [${ztree}];
             jQuery(document).ready(function () {
-                var t = $("#treeRis");
+                var t = $("#tree");
                 t = $.fn.zTree.init(t, setting, zNodes);
-                var zTree = $.fn.zTree.getZTreeObj("treeRis");
+                var zTree = $.fn.zTree.getZTreeObj("tree");
             });
             $('#risList').modal('show');
+            $('#risList')[0].contentdata = id;
         }
-        function getSelectedRis() {
-            var treeObj = $.fn.zTree.getZTreeObj("treeRis");
+        function getSelected() {
+            var treeObj = $.fn.zTree.getZTreeObj("tree");
             var nodes = treeObj.getSelectedNodes();
+            var id = $('#risList')[0].contentdata;
             if (nodes.length > 0) {
-                $("#risId").val(nodes[0].id);
-                $("#risName").val(nodes[0].name);
+                $("#row"+id)[0].contentid = nodes[0].id;
+                $("#row"+id)[0].contentname = nodes[0].name;
                 $('#risList').modal('hide');
+                // 更新所属信息化名称
+                $.ajax({
+                    type : 'POST',
+                    url : 'updateData.htm',
+                    dataType : 'json',
+                    data : {
+                        no:$('#risList')[0].contentdata,
+                        riopiId: $("#row"+id)[0].contentid||0,
+                        riopiName:$("#row"+id)[0].contentname||''
+                    },
+                    success : function(result) {
+                        //  按钮修改成已导入
+
+                        return;
+                    },
+                    failure:function(){
+                        //按钮不变
+                    }
+                });
             }
             else return;
         }
 
-        $(function () {
-            $("#btnSearch").bind('click', searchExistingProject);
-            $("#btnAdd").bind('click', addExistingProject);
-        })
         // 查询方法
-        var searchExistingProject = function () {
+        var searchModule = function () {
             var url = "index.htm?";
             if ($("#txtExistingProjectname").val() != '')
-                url += "&name=" + $("#txtExistingProjectname").val();
+                url += "&name=" + $("#ExistingProjectname").val();
             window.location = encodeURI(url);
         }
         //新增
@@ -238,6 +214,30 @@
                     window.location = "delete.htm?id=" + id + "&backUrl=${backUrl}";
                 }
             })
+        }
+        //导入数据
+        var  importData = function (id) {
+            $.ajax({
+                type : 'POST',
+                url : 'importData.htm',
+                dataType : 'json',
+                data : {
+                    no:id,
+                    riopiId: $("#row"+id)[0].contentid||0,
+                    riopiName:$("#row"+id)[0].contentname||''
+                },
+                success : function(result) {
+                 //  按钮修改成已导入
+                    var result =result;
+                    if(result == 1){
+                     $('#btnimport'+id).innerHTML = '已导入';
+                    }
+                    return;
+                },
+                failure:function(){
+                 //按钮不变
+                }
+            });
         }
     </script>
 </critc-script>

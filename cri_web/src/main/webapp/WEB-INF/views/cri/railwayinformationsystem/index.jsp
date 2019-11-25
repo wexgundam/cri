@@ -83,7 +83,7 @@
                class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
-                <th width=220>铁路信息系统名称</th>
+                <th width=300>铁路信息系统名称</th>
                 <th width=160>项目类型名称</th>
                 <th width=160>项目进度名称</th>
                 <th width=200>通过评审的需求分析报告</th>
@@ -237,4 +237,5 @@
             $("#RIOPI_ID").val("");
             $("#clearNode").remove();
         };
+
 </script> </critc-script>
