@@ -35,6 +35,11 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
         return insert(sql, railwayInformationSystem);
     }
 
+    public int addForId(RailwayInformationSystem railwayInformationSystem) {
+        String sql = "insert into t_railway_information_system(id,name,riopi_id,riopi_name,order_index,creator_id,creator_real_name,created_at,last_editor_id,last_editor_real_name,last_edited_at)"
+                + " values(SEQ_T_RIS.nextval,:name,:RIOPI_ID,:RIOPI_NAME,:ORDER_INDEX,:CREATOR_ID,:CREATOR_REAL_NAME,sysdate,:LAST_EDITOR_ID,:LAST_EDITOR_REAL_NAME,sysdate)";
+        return insertForId(sql, railwayInformationSystem, "id");
+    }
     /**
      *
      * what: 修改
@@ -143,13 +148,12 @@ public class RailwayInformationSystemDao extends BaseDao<RailwayInformationSyste
      * @author rs created on 2019年9月4日
      */
     public List<RailwayInformationSystem> list() {
-        String sql = "select t.id,t.name from t_railway_information_system t ";
+        String sql="select t.id,t.name,t.riopi_id,t.riopi_name, t.order_index,t.last_edited_at from t_railway_information_system t";
         return list(sql);
     }
 
-    public List<RailwayInformationSystem> getIdByriopiname(String riopiname) {
-        String sql = "select t.id,t.display_order from t_riopi t where "
-                + "name=?";
-        return list(sql, riopiname);
+    public int getMaxNum() {
+        String sql = "select max(id) from t_railway_information_system ";
+          return count(sql);
     }
 }

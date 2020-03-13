@@ -22,7 +22,7 @@ public class ExistingProject{
     /**
      *铁路信息系统主键
      */
-    private int risId;
+    private Integer risId;
     /**
      *铁路信息系统名称
      */
@@ -46,7 +46,7 @@ public class ExistingProject{
     private String reviewPassedTts;
     private String reviewPassedFsr;
 
-    private int constructionDepartmentId;
+    private Integer constructionDepartmentId;
     private String constructionDepartmentName;
     private Integer orderIndex;
     private Integer creatorId;
@@ -71,15 +71,6 @@ public class ExistingProject{
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ExistingProject people = (ExistingProject) o;
-
-        return id == people.id;
-    }
-    @Override
     public int hashCode() {
         return id;
     }
@@ -88,8 +79,8 @@ public class ExistingProject{
     public String toString() {
         return "ExistingProject{" +
                 "id=" + id +
-                ", res_id=" + risId +
-                ",ris_name="+risName+
+                ", risId=" + risId +
+                ", risName="+risName+
                 ", name='" + name + '\'' +
                 ", projectTypeCode='" + projectTypeCode + '\'' +
                 ", projectTypeName='" + projectTypeName + '\'' +
@@ -118,7 +109,7 @@ public class ExistingProject{
     }
 
 
-    public int getRisId() {
+    public Integer getRisId() {
         return risId;
     }
 
@@ -202,7 +193,7 @@ public class ExistingProject{
         this.reviewPassedFsr = reviewPassedFsr;
     }
 
-    public int getConstructionDepartmentId() {
+    public Integer getConstructionDepartmentId() {
         return constructionDepartmentId;
     }
 

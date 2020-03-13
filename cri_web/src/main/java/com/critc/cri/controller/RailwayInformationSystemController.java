@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import com.critc.core.pub.PubConfig;
 import com.critc.cri.model.RailwayInformationSystem;
 import com.critc.cri.service.RiopiService;
+import com.critc.sys.service.SysDicService;
 import com.critc.util.code.GlobalCode;
 import com.critc.util.page.PageNavigate;
 import com.critc.util.string.BackUrlUtil;
@@ -50,6 +51,8 @@ public class RailwayInformationSystemController {
 	 */
 	@Autowired
 	private PubConfig pubConfig;
+	@Autowired
+	private SysDicService sysDicService;
 	/**
 	 * 
 	 * what:    自动补全主页
@@ -71,12 +74,13 @@ public class RailwayInformationSystemController {
 		String url = pubConfig.getDynamicServer() + "/cri/railwayinformationsystem/index.htm?";
 		// 定义分页对象
 		PageNavigate pageNavigate = new PageNavigate(url, railwayInformationSystemSearchVO.getPageIndex(), recordCount);
-
+		String ztree = riopiService.createZtreeByModule();// 信息系统列表
 		// 设置分页的变量
 		mv.addObject("pageNavigate", pageNavigate);
 		mv.addObject("backUrl", StringUtil.encodeUrl(url));
-		mv.addObject("listContent", riopiService.listCombo());// 信息系统列表
+	//	mv.addObject("listContent", riopiService.listCombo());// 信息系统列表
 		mv.addObject("list", list);
+		mv.addObject("zTree", ztree);
 		return mv;
 	}
 
@@ -97,6 +101,10 @@ public class RailwayInformationSystemController {
 		RailwayInformationSystem railwayInformationSystem = railwayInformationSystemService.get(id);
 		mv.addObject("systeminfo", railwayInformationSystem);
 		String ztree = riopiService.createZtreeByModule();// 信息系统列表
+		// 添加字典 项目类型 / 进度编码 / 网络安全等级
+		mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+		mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+		mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
 		mv.addObject("zTree", ztree);
 		mv.setViewName("/cri/railwayinformationsystem/update");
 		// 设置返回的url
@@ -146,7 +154,11 @@ public class RailwayInformationSystemController {
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		// 部门列表
-	//	mv.addObject("listType", sysDicService.getByCategory("DEPARTMENT_TYPE"));
+		// 添加字典 项目类型 / 进度编码 / 网络安全等级
+		mv.addObject("listProjectType", sysDicService.getByCategory("PROJECT_TYPE"));
+		mv.addObject("listProjectProgress", sysDicService.getByCategory("PROJECT_PROGRESS"));
+		mv.addObject("listNetworkSecurity", sysDicService.getByCategory("NETWORK_SECURITY"));
+		//	mv.addObject("listType", sysDicService.getByCategory("DEPARTMENT_TYPE"));
 		mv.setViewName("/cri/railwayinformationsystem/add");
 		// 设置返回的url
 		String ztree = riopiService.createZtreeByModule();// 信息系统列表
@@ -210,6 +222,14 @@ public class RailwayInformationSystemController {
 			// 删除成功
 			return "forward:/success.htm?resultCode=" + GlobalCode.DELETE_SUCCESS;
 		}
+	}
+
+	@RequestMapping("/datalist")
+	public ModelAndView getdatalist(HttpServletRequest request, HttpServletResponse response, int id) {
+		ModelAndView mv = new ModelAndView();
+		RailwayInformationSystem railwayInformationSystem = railwayInformationSystemService.get(id);
+		mv.addObject("systeminfo", railwayInformationSystem);
+		return mv;
 	}
 	
 }

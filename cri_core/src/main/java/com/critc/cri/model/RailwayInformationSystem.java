@@ -66,7 +66,7 @@ public class RailwayInformationSystem {
     /**
      *建设单位Id
      */
-    private String CONSTRUCTION_DEPARTMENT_ID;
+    private Integer CONSTRUCTION_DEPARTMENT_ID;
 
     /**
      *建设单位名称
@@ -275,11 +275,11 @@ public class RailwayInformationSystem {
         this.REVIEW_PASSED_FSR = REVIEW_PASSED_FSR;
     }
 
-    public String getCONSTRUCTION_DEPARTMENT_ID() {
+    public Integer getCONSTRUCTION_DEPARTMENT_ID() {
         return CONSTRUCTION_DEPARTMENT_ID;
     }
 
-    public void setCONSTRUCTION_DEPARTMENT_ID(String CONSTRUCTION_DEPARTMENT_ID) {
+    public void setCONSTRUCTION_DEPARTMENT_ID(Integer CONSTRUCTION_DEPARTMENT_ID) {
         this.CONSTRUCTION_DEPARTMENT_ID = CONSTRUCTION_DEPARTMENT_ID;
     }
 
